@@ -11,6 +11,7 @@ import './components'
 import '../node_modules/bulma/css/bulma.css'
 
 Vue.use(Notifications)
+window.notificationHub = {notify: (new Vue()).$notify}
 
 Vue.config.productionTip = false
 

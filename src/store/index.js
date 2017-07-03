@@ -23,13 +23,23 @@ const state = {
   warehouseSize: 50,
   gear: {},
   location: {
-    name: 'Test',
-    gearscore: 15
+    gearscore: 30,
+    name: 'Training Grounds'
   },
-  locations: [{
-    name: 'Test',
-    gearscore: 15
-  }],
+  locations: [
+    {
+      gearscore: 100,
+      name: 'Grandma\'s Handbag'
+    },
+    {
+      gearscore: 250,
+      name: 'Local Chicken Coop'
+    },
+    {
+      gearscore: 1000,
+      name: 'The Glistening Caves'
+    }
+  ],
   generator: {
     items: items,
     gearSlots: gear,

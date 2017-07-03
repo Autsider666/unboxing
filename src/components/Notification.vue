@@ -1,6 +1,6 @@
 <template>
     <div>
-        <notifications position="bottom right" >
+        <notifications position="top right" >
             <template slot="body" scope="props">
                 <article class="message">
                     <div class="message-header">

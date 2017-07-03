@@ -10,8 +10,8 @@
                 <a href="#">Hard</a>
                 <a href="#">Impossible</a>
             </p>
-            <a v-for="loc in locations" v-bind:class="isActive(loc) ? 'is-active' : ''" class="panel-block"
-               href="#">
+            <a v-for="loc in locations" v-bind:class="loc.name === location.name ? 'is-active' : ''" class="panel-block"
+               @click="goToLocation(loc)">
                 {{loc.name}} - ({{ loc.gearscore}} GS)
             </a>
         </nav>
@@ -19,18 +19,16 @@
 </template>
 
 <script>
-  import { mapState } from 'vuex'
+  import { mapMutations, mapState } from 'vuex'
 
   export default {
     name: 'LocationsTab',
     data () {
       return {}
     },
-    methods: {
-      isActive (loc) {
-        return loc.name === this.location.name
-      }
-    },
+    methods: mapMutations([
+      'goToLocation'
+    ]),
     computed: mapState([
       'location',
       'locations'

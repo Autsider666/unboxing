@@ -4,9 +4,9 @@
             Inventory
         </h1>
         <unbox-tab></unbox-tab>
-        <div class="notification is-warning" v-if="inventory.length >= inventorySize">
-            Warning! Inventory full
-        </div>
+        <!--<div class="notification is-warning" v-if="inventory.length >= inventorySize">-->
+            <!--Warning! Inventory full-->
+        <!--</div>-->
         <table class="table is-striped">
             <thead>
             <tr>
@@ -43,18 +43,21 @@
                             </button>
                         </p>
                     </div>
-                    <button class="button is-success" @click="open(item)">Open</button>
-                    <button class="button is-danger" @click="remove(item)">Remove</button>
-                    <button class="button is-primary" @click="send({item, target: 'warehouse'})"
-                            v-bind:disabled="warehouse.size >= warehouseSize">Send to warehouse
-                    </button>
                 </td>
                 <td v-else>
-                    <button class="button is-success is-outlined" @click="equip(item)">Equip</button>
-                    <button class="button is-danger is-outlined" @click="remove(item)">Remove</button>
-                    <button class="button is-primary is-outlined" @click="send({item, target: 'warehouse'})"
-                            v-bind:disabled="warehouse.size >= warehouseSize">Send to warehouse
-                    </button>
+                    <div class="field has-addons">
+                        <p class="control">
+                            <button class="button is-success is-outlined" @click="equip(item)">Equip</button>
+                        </p>
+                        <p class="control">
+                            <button class="button is-danger is-outlined" @click="remove(item)">Remove</button>
+                        </p>
+                        <p class="control">
+                            <button class="button is-primary is-outlined" @click="send({item, target: 'warehouse'})"
+                                    v-bind:disabled="warehouse.size >= warehouseSize">Send to warehouse
+                            </button>
+                        </p>
+                    </div>
                 </td>
             </tr>
             <tr v-if="inventory.length === 0">

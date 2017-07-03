@@ -32,8 +32,9 @@
 </script>
 
 <style>
-    html, table {
+    html, table, .modal-card-body {
         background-color: #201F1D !important;
+        color: #dbdbdb !important;
     }
 
     .title, .panel-block, .panel-heading {
@@ -59,8 +60,21 @@
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
         text-align: center;
-        color: #2c3e50;
+        /*color: #2c3e50;*/
         margin-top: 60px;
+    }
+
+    table tr:hover {
+        background-color: inherit !important;
+        color: inherit !important;
+    }
+
+    .table.is-striped tbody tr:not(.is-selected):nth-child(even) {
+        background-color: inherit !important;
+    }
+
+    .notification.is-warning, .panel-block.is-warning {
+        background-color: rgb(222, 141, 71) !important;
     }
 
     .Poor {
@@ -68,7 +82,7 @@
     }
 
     .Normal {
-
+        color: white !important;
     }
 
     .Good {

@@ -19,10 +19,18 @@ export default {
       state.progress -= state.location.gearscore
       if (state.inventory.length < state.inventorySize) {
         state.inventory.unshift(generateCrate(state))
+        notificationHub.notify({
+          title: 'New ' + state.inventory[0].type,
+          text: 'Here, have a ' + state.inventory[0].name
+        })
       }
     }
   },
-  pick (state, {crate, item}) {
+  goToLocation (state, location) {
+    state.progress = 0
+    state.location = location
+  },
+  chooseItem (state, {crate, item}) {
     for (let i in state.inventory) {
       if (state.inventory[i] === crate) {
         for (let j in crate.items) {
@@ -34,6 +42,19 @@ export default {
         }
       }
       Vue.set(state.inventory[i], 'open', false)
+    }
+
+    for (let i in state.warehouse) {
+      if (state.warehouse[i] === crate) {
+        for (let j in crate.items) {
+          if (crate.items[j] === item) {
+            state.warehouse.splice(i, 1)
+            state.warehouse.unshift(item)
+            break
+          }
+        }
+      }
+      Vue.set(state.warehouse[i], 'open', false)
     }
   },
   send (state, {item, target}) {

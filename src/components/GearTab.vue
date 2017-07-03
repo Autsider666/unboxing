@@ -4,7 +4,7 @@
             Gear ({{gearscore}} GS)
         </p>
         <a class="panel-block" v-for="item in gear" v-bind:class="item.rarity">
-            {{item.type}}: {{item.name}} <br/>{{ item.gearscore}} GS
+            {{item.type}}: {{item.name}} ({{ item.gearscore}} GS)
         </a>
     </nav>
 </template>

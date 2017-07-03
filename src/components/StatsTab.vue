@@ -8,7 +8,7 @@
         </p>
         <p class="panel-block" href="#">
             <progress v-bind:value="progress" v-bind:max="location.gearscore"
-                      class="progress is-primary is-small"></progress>
+                      class="progress is-danger is-small"></progress>
         </p>
         <p class="panel-block" href="#">
             Progress:  {{Math.floor(progress)}}/{{location.gearscore}}
