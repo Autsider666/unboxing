@@ -1,0 +1,22 @@
+[
+  {
+    "name": "Poor",
+    "chance": 15
+  },
+  {
+    "name": "Normal",
+    "chance": 65
+  },
+  {
+    "name": "Good",
+    "chance": 15
+  },
+  {
+    "name": "Great",
+    "chance": 4
+  },
+  {
+    "name": "Amazing",
+    "chance": 1
+  }
+]

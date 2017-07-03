@@ -1,0 +1,9 @@
+[
+  {
+    "name": "Generic crate",
+    "rarity": "Normal",
+    "subType": "Generic",
+    "items": 3,
+    "chance": 100
+  }
+]
