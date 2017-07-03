@@ -33,29 +33,25 @@
 
 <style>
     html, table {
-        background-color: #201F1D;
+        background-color: #201F1D !important;
     }
 
     .title, .panel-block, .panel-heading {
         color: aliceblue !important;
-        background-color: #201F1D;
+        background-color: #201F1D !important;
     }
 
     .panel-block.is-active {
-        border-left-color: orange;
-        /*color: #363636;*/
+        border-left-color: orange !important;
     }
 
     .panel-tabs a {
-        /*border-bottom: 1px solid #dbdbdb;*/
-        /*margin-bottom: -1px;*/
-        /*padding: 0.5em;*/
-        color: rgb(128, 83, 38);
+        color: rgb(128, 83, 38) !important;
     }
 
     .panel-tabs a.is-active {
-        border-bottom-color: rgb(222, 141, 71);
-        color: rgb(222, 141, 71);
+        border-bottom-color: rgb(222, 141, 71) !important;
+        color: rgb(222, 141, 71) !important;
     }
 
     #app {
