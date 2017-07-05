@@ -179,15 +179,19 @@ function choice (a) {
   return a[i]
 }
 
-function rarityChoice (a) {
-  let c = []
+function rarityChoice (a, external) {
+  let choices = []
   for (let i in a) {
-    let p = a[i]
-    for (let j = 0; j < p.chance; j++) {
-      c.push(p)
+    var amount = a[i].chance
+    var type = a[i].name
+    if (external && external[type] !== null) {
+      amount = external[type]
+    }
+    for (; amount > 0; amount--) {
+      choices.push(a[i])
     }
   }
-  return choice(c)
+  return choice(choices)
 }
 
 function generateName (generator, type = 'Weapon', minLength = 3, maxLength = 5) {
@@ -203,15 +207,9 @@ function generateName (generator, type = 'Weapon', minLength = 3, maxLength = 5)
   return title.join(' ')
 }
 
-function generateItem (state) {
-  let type = choice(state.generator.gearSlots)
-  let rarities = []
-  for (let rarity in state.generator.rarities) {
-    for (let j = 0; j < state.generator.rarities[rarities]; j++) {
-      rarities.push(rarity)
-    }
-  }
-  let rarity = rarityChoice(state.generator.rarities).name
+function generateItem (state, crateTemplate) {
+  let type = rarityChoice(state.generator.gearSlots, crateTemplate.contains.types).name
+  let rarity = rarityChoice(state.generator.rarities, crateTemplate.contains.rarities).name
 
   return {
     name: generateName(state.generator, type),
@@ -232,9 +230,8 @@ function generateCrate (state) {
 
   let crateTemplate = rarityChoice(state.generator.crates)
   let loot = []
-
-  for (let i = 0; i < crateTemplate.items; i++) {
-    loot.push(generateItem(state))
+  for (let i = 0; i < crateTemplate.contains.items; i++) {
+    loot.push(generateItem(state, crateTemplate))
   }
 
   return {

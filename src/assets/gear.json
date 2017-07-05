@@ -1,7 +1,22 @@
 [
-  "Weapon",
-  "Chest",
-  "Head",
-  "Legs",
-  "Feet"
+  {
+    "name": "Weapon",
+    "chance": 1
+  },
+  {
+    "name": "Head",
+    "chance": 1
+  },
+  {
+    "name": "Chest",
+    "chance": 1
+  },
+  {
+    "name": "Legs",
+    "chance": 1
+  },
+  {
+    "name": "Feet",
+    "chance": 1
+  }
 ]

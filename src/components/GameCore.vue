@@ -17,7 +17,9 @@
       'progress',
       'fps',
       'location',
-      'load'
+      'load',
+      'enemy',
+      'trainingBots'
     ]),
     methods: {
       coreLoop () {

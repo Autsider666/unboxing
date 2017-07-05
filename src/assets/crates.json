@@ -3,7 +3,23 @@
     "name": "Generic crate",
     "rarity": "Normal",
     "subType": "Generic",
-    "items": 3,
+    "contains": {
+      "items": 3,
+      "rarities": {
+        "Poor": null,
+        "Normal": null,
+        "Good": null,
+        "Great": null,
+        "Amazing": null
+      },
+      "types": {
+        "Weapon": null,
+        "Chest": null,
+        "Legs": null,
+        "Feet": null,
+        "Head": null
+      }
+    },
     "chance": 100
   }
 ]
