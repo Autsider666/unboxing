@@ -1,7 +1,7 @@
 <template>
     <html>
     <head>
-        <link rel="stylesheet" href="../static/css/font-awesome.min.css">
+        <link rel="stylesheet" href="static/css/font-awesome.min.css">
     </head>
     <body>
     <div id="app">

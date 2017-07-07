@@ -262,16 +262,16 @@ function generateItem (state, crateTemplate) {
   let mp = 1
   switch (rarity) {
     case 'Poor':
-      mp = 0.9
+      mp = 0.7
       break
     case 'Good':
-      mp = 1.1
-      break
-    case 'Great':
       mp = 1.2
       break
+    case 'Great':
+      mp = 1.4
+      break
     case 'Amazing':
-      mp = 1.3
+      mp = 1.7
       break
   }
   if (type === 'Weapon') {
