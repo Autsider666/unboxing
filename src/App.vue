@@ -1,4 +1,9 @@
 <template>
+    <html>
+    <head>
+        <link rel="stylesheet" href="../static/css/font-awesome.min.css">
+    </head>
+    <body>
     <div id="app">
         <notification/>
         <game-core/>
@@ -42,6 +47,8 @@
         <!--</div>-->
         <!--</div>-->
     </div>
+    </body>
+    </html>
 </template>
 
 <script>
@@ -86,6 +93,10 @@
 
     .panel-block th {
         background-color: inherit !important;
+    }
+
+    .panel-block a:hover {
+        color: inherit !important;
     }
 
     .title, .panel-block, .panel-heading, .panel-tabs {

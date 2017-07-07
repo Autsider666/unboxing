@@ -29,15 +29,15 @@ export default {
         if (state.inventory.length < state.inventorySize) {
           state.inventory.unshift(generateCrate(state))
           notificationHub.notify({
-            title: 'New ' + state.inventory[0].type,
+            title: 'New ' + state.inventory[0].type + ' in your Inventory',
             text: 'Here, have a(n) ' + state.inventory[0].name
           })
         } else if (state.warehouse.length < state.warehouseSize) {
           let crate = generateCrate(state)
           state.warehouse.unshift(choice(crate.items))
           notificationHub.notify({
-            title: 'New ' + state.warehouse[0].type,
-            text: 'Here, have a(n) ' + state.warehouse[0].name
+            title: 'New ' + state.warehouse[0].type + ' in your Warehouse',
+            text: 'Here, have a(n) ' + state.warehouse[0].name + '<br><br>You were out of space, so we just picked one and send it to your warehouse'
           })
         }
         return
@@ -69,22 +69,6 @@ export default {
   queueEnemy (state, enemy) {
     Vue.set(state, 'next', enemy)
     Vue.set(state.next, 'damage', 0)
-  },
-  goalReached (state) {
-    while (state.progress >= state.location.gearscore) {
-      state.progress -= state.location.gearscore
-      if (state.inventory.length < state.inventorySize) {
-        state.inventory.unshift(generateCrate(state))
-        notificationHub.notify({
-          title: 'New ' + state.inventory[0].type,
-          text: 'Here, have a ' + state.inventory[0].name
-        })
-      }
-    }
-  },
-  goToLocation (state, location) {
-    state.progress = 0
-    state.location = location
   },
   chooseItem (state, {crate, item}) {
     for (let i in state.inventory) {
@@ -243,7 +227,7 @@ function rarityChoice (a, external) {
   for (let i in a) {
     var amount = a[i].chance
     var type = a[i].name
-    if (external && external[type]) {
+    if (external && external[type] !== undefined && external[type] !== null) {
       amount = external[type]
     }
     for (; amount > 0; amount--) {

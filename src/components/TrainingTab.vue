@@ -14,8 +14,13 @@
                @click="queueEnemy(e)">
                 <table>
                     <tr>
-                        <th v-bind:class="e.name === next.name && e.name !== enemy.name ? 'has-text-right' : ''">
+                        <!--"e.name === next.name && e.name !== enemy.name"-->
+                        <th v-if="e.name === enemy.name || e.name === next.name"
+                            v-bind:class="e.name !== enemy.name && e.name === next.name ? 'has-text-right' : ''">
                             {{e.name}}
+                        </th>
+                        <th v-else>
+                            <a>{{e.name}}</a>
                         </th>
                         <td class="has-text-right">{{mechanics.getGearscore(e)}} GS</td>
                     </tr>

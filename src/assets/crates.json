@@ -20,6 +20,27 @@
         "Head": null
       }
     },
+    "chance": 10000
+  },
+  {
+    "name": "Ultra Rare Extravagant Hat Container",
+    "rarity": "Amazing",
+    "subType": "Hats!!!!!",
+    "contains": {
+      "items": 6,
+      "rarities": {
+        "Poor": 0,
+        "Normal": 0,
+        "Good": 0,
+        "Great": 0
+      },
+      "types": {
+        "Weapon": 0,
+        "Chest": 0,
+        "Legs": 0,
+        "Feet": 0
+      }
+    },
     "chance": 1
   },
   {
@@ -32,7 +53,7 @@
         "Poor": 0
       }
     },
-    "chance": 1,
+    "chance": 10000,
     "creator": "@harry"
   }
 ]

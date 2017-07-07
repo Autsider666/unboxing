@@ -13,6 +13,9 @@
             <!--<span v-if="enableIdleCombat">Disable</span>-->
             <!--<span v-else>Enable</span>-->
             <!--&nbsp-->
+            <i v-if="enableIdleCombat" class="fa fa-play" aria-hidden="true"></i>
+            <i v-else="" class="fa fa-pause" aria-hidden="true"></i>
+            &nbsp;
             Idle Combat
         </button>
 
@@ -21,6 +24,9 @@
             <!--<span v-if="enableIdleHealing">Disable</span>-->
             <!--<span v-else>Enable</span>-->
             <!--&nbsp-->
+            <i v-if="enableIdleHealing" class="fa fa-check" aria-hidden="true"></i>
+            <i v-else="" class="fa fa-times" aria-hidden="true"></i>
+            &nbsp;
             Idle Repair
         </button>
 

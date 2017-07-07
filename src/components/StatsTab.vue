@@ -16,7 +16,7 @@
         <router-link class="panel-block" v-bind:class="inventory.length >= inventorySize ? 'is-warning' : ''" to="inventory">
             <table>
                 <tr>
-                    <th>Inventory: </th>
+                    <th><a>Inventory: </a></th>
                     <td class="has-text-right">{{inventory.length}} / {{inventorySize}}</td>
                 </tr>
             </table>
@@ -25,7 +25,7 @@
                      to="warehouse">
             <table>
                 <tr>
-                    <th>Warehouse: </th>
+                    <th><a>Warehouse: </a></th>
                     <td class="has-text-right">{{warehouse.length}} / {{warehouseSize}}</td>
                 </tr>
             </table>
