@@ -33,10 +33,10 @@ const state = {
     gear: {
       left: null,
       right: null,
-      body: null,
-      helmet: null,
-      gloves: null,
-      boots: null
+      Chest: null,
+      Head: null,
+      Legs: null,
+      Feet: null
     },
     actions: [],
     damage: 0
@@ -74,6 +74,10 @@ const state = {
   inventorySize: 10,
   warehouse: [],
   warehouseSize: 50,
+  workshop: {
+    lvl: 1,
+    exp: 0
+  },
   generator: {
     weapons: weapons,
     items: items,

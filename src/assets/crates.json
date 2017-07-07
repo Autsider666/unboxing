@@ -20,6 +20,19 @@
         "Head": null
       }
     },
-    "chance": 100
+    "chance": 1
+  },
+  {
+    "name": "Big Generic Crate",
+    "rarity": "Good",
+    "subType": "Big",
+    "contains": {
+      "items": 5,
+      "rarities": {
+        "Poor": 0
+      }
+    },
+    "chance": 1,
+    "creator": "@harry"
   }
 ]

@@ -93,17 +93,17 @@ export default {
   getDefense (bot) {
     let defense = 0
     if (bot.isPlayer) {
-      if (bot.gear.helmet) {
-        defense += bot.gear.helmet.defense
+      if (bot.gear.Head) {
+        defense += bot.gear.Head.defense
       }
-      if (bot.gear.body) {
-        defense += bot.gear.body.defense
+      if (bot.gear.Chest) {
+        defense += bot.gear.Chest.defense
       }
-      if (bot.gear.gloves) {
-        defense += bot.gear.gloves.defense
+      if (bot.gear.Legs) {
+        defense += bot.gear.Legs.defense
       }
-      if (bot.gear.boots) {
-        defense += bot.gear.boots.defense
+      if (bot.gear.Feet) {
+        defense += bot.gear.Feet.defense
       }
     } else {
       defense = bot.defense

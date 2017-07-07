@@ -32,7 +32,7 @@ export default {
             title: 'New ' + state.inventory[0].type,
             text: 'Here, have a(n) ' + state.inventory[0].name
           })
-        } else {
+        } else if (state.warehouse.length < state.warehouseSize) {
           let crate = generateCrate(state)
           state.warehouse.unshift(choice(crate.items))
           notificationHub.notify({
@@ -91,13 +91,16 @@ export default {
       if (state.inventory[i] === crate) {
         for (let j in crate.items) {
           if (crate.items[j] === item) {
-            state.inventory.splice(i, 1)
-            state.warehouse.unshift(item)
+            if (state.warehouse.length < state.warehouseSize) {
+              state.inventory.splice(i, 1)
+              state.warehouse.unshift(item)
+            }
             break
           }
         }
+      } else {
+        Vue.set(state.inventory[i], 'open', false)
       }
-      // Vue.set(state.inventory[i], 'open', false)
     }
 
     // for (let i in state.warehouse) {
@@ -240,7 +243,7 @@ function rarityChoice (a, external) {
   for (let i in a) {
     var amount = a[i].chance
     var type = a[i].name
-    if (external && external[type] !== null) {
+    if (external && external[type]) {
       amount = external[type]
     }
     for (; amount > 0; amount--) {
@@ -298,14 +301,6 @@ function generateItem (state, crateTemplate) {
 }
 
 function generateCrate (state) {
-  let crates = []
-  for (let i in state.generator.crates) {
-    let crate = state.generator.crates[i]
-    for (let j = 0; j < crate.chance; j++) {
-      crates.push(crate)
-    }
-  }
-
   let crateTemplate = rarityChoice(state.generator.crates)
   let loot = []
   for (let i = 0; i < crateTemplate.contains.items; i++) {

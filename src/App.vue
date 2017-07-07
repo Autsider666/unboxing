@@ -2,10 +2,6 @@
     <div id="app">
         <notification/>
         <game-core/>
-
-        <!--<nav class="nav">-->
-        <!--top nav menu -->
-        <!--</nav>-->
         <div class="section">
             <div class="columns">
                 <aside class="column is-2-widescreen is-3-desktop is-4-tablet">
@@ -63,6 +59,10 @@
         }
     }
 
+    .panel-heading a {
+        color: inherit !important;
+    }
+
     tr {
         background-color: inherit !important;
     }
@@ -76,6 +76,10 @@
         color: #dbdbdb !important;
     }
 
+    /*.panel-block {*/
+    /*text-align: center !important;*/
+    /*}*/
+
     table {
         background-color: inherit !important;
     }
@@ -84,7 +88,7 @@
         background-color: inherit !important;
     }
 
-    .title, .panel-block, .panel-heading {
+    .title, .panel-block, .panel-heading, .panel-tabs {
         color: aliceblue !important;
         background-color: #201F1D !important;
     }
