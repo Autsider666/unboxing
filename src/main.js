@@ -8,6 +8,7 @@ import router from './router'
 
 import './components'
 
+import './assets/css/font-awesome.min.css'
 import '../node_modules/bulma/css/bulma.css'
 
 Vue.use(Notifications)
