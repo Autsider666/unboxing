@@ -32,12 +32,12 @@
                 <td v-if="item.type == 'Crate'">
                     <button class="button" @click="open(item)">Open</button>
                     <button class="button" @click="remove(item)">Remove</button>
-                    <button class="button" @click="send({item, target: 'inventory'})" v-bind:disabled="inventory.length >= inventorySize">Send to inventory</button>
+                    <!--<button class="button" @click="send({item, target: 'inventory'})" v-bind:disabled="inventory.length >= inventorySize">Send to inventory</button>-->
                 </td>
                 <td v-else>
                     <button class="button" @click="equip(item)">Equip</button>
                     <button class="button" @click="remove(item)">Remove</button>
-                    <button class="button" @click="send({item, target: 'inventory'})" v-bind:disabled="inventory.length >= inventorySize">Send to inventory</button>
+                    <!--<button class="button" @click="send({item, target: 'inventory'})" v-bind:disabled="inventory.length >= inventorySize">Send to inventory</button>-->
                 </td>
             </tr>
             <tr v-if="warehouse.length === 0">

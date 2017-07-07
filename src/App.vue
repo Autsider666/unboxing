@@ -1,27 +1,50 @@
 <template>
-    <div id="app" class="container">
+    <div id="app">
         <notification/>
         <game-core/>
-        <!--<div class="columns">-->
-        <!--<div class="column is-8">-->
-        <!--<grinding-tab></grinding-tab>-->
-        <!--</div>-->
-        <!--<div class="column is-4">-->
-        <!--<stats-tab></stats-tab>-->
-        <!--</div>-->
-        <!--</div>-->
-        <div class="columns">
-            <div class="column is-8">
-                <grinding-tab></grinding-tab>
-                <router-view></router-view>
-            </div>
-            <div class="column is-4">
-                <stats-tab></stats-tab>
-                <storage-tab></storage-tab>
-                <gear-tab></gear-tab>
-                <locations-tab></locations-tab>
+
+        <!--<nav class="nav">-->
+        <!--top nav menu -->
+        <!--</nav>-->
+        <div class="section">
+            <div class="columns">
+                <aside class="column is-2-widescreen is-3-desktop is-4-tablet">
+                    <nav class="menu">
+                        <stats-tab></stats-tab>
+                        <training-tab></training-tab>
+                    </nav>
+                </aside>
+                <main class="column">
+                    <management-tab></management-tab>
+                    <router-view></router-view>
+                </main>
+                <aside class="column is-2-widescreen is-3-desktop is-4-tablet">
+                    <nav class="menu">
+                        <bot-tab :bot="$store.state.bot"></bot-tab>
+                        <bot-tab :bot="$store.state.enemy"></bot-tab>
+                    </nav>
+                </aside>
             </div>
         </div>
+
+        <!--<div class="columns">-->
+        <!--<aside class="column is-3">-->
+        <!--<stats-tab></stats-tab>-->
+        <!--<bot-tab :bot="$store.state.bot"></bot-tab>-->
+        <!--<bot-tab :bot="$store.state.enemy"></bot-tab>-->
+        <!--<training-tab></training-tab>-->
+        <!--</aside>-->
+        <!--<div class="column is-6">-->
+        <!--<management-tab></management-tab>-->
+        <!--<router-view></router-view>-->
+        <!--</div>-->
+        <!--<div class="column is-3">-->
+        <!--<stats-tab></stats-tab>-->
+        <!--<bot-tab :bot="$store.state.bot"></bot-tab>-->
+        <!--<bot-tab :bot="$store.state.enemy"></bot-tab>-->
+        <!--<training-tab></training-tab>-->
+        <!--</div>-->
+        <!--</div>-->
     </div>
 </template>
 
@@ -32,9 +55,33 @@
 </script>
 
 <style>
-    html, table, .modal-card-body {
+    @media screen and (min-width: 1384px) {
+        .container {
+            /*max-width: 1344px;*/
+            max-width: 95% !important;
+            width: 100% !important;
+        }
+    }
+
+    tr {
+        background-color: inherit !important;
+    }
+
+    .highlight {
+        color: yellow;
+    }
+
+    .nav, .section, html, table, .modal-card-body, .panel-block th {
         background-color: #201F1D !important;
         color: #dbdbdb !important;
+    }
+
+    table {
+        background-color: inherit !important;
+    }
+
+    .panel-block th {
+        background-color: inherit !important;
     }
 
     .title, .panel-block, .panel-heading {
@@ -61,7 +108,7 @@
         -moz-osx-font-smoothing: grayscale;
         text-align: center;
         /*color: #2c3e50;*/
-        margin-top: 60px;
+        /*margin-top: 60px;*/
     }
 
     table tr:hover {

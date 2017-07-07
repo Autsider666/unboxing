@@ -10,40 +10,31 @@
       return {
         interval: 0,
         before: 0,
-        running: false
+        delta: 0
       }
     },
     computed: mapState([
-      'progress',
-      'fps',
-      'location',
-      'load',
-      'enemy',
-      'trainingBots'
+      'attackDuration',
+      'fps'
     ]),
     methods: {
       coreLoop () {
         let now = new Date().getTime()
         let elapsed = now - this.before
-        if (elapsed > Math.ceil(this.interval)) {
-          this.idle(elapsed / this.interval)
-        } else {
-          this.idle(1)
+        this.delta += elapsed
+        this.$store.dispatch('tick', elapsed / 1000.0)
+        while (this.delta >= this.attackDuration) {
+          this.$store.dispatch('attack')
+          this.delta -= this.attackDuration
         }
         this.before = now
-      },
-      idle (time) {
-        this.$store.commit('grindIdle', time / this.fps)
-        if (Math.ceil(this.progress) >= this.location.gearscore) {
-          this.$store.commit('goalReached')
-        }
       }
     },
     mounted () {
       this.$store.commit('loadGenerator')
-      if (!this.load) {
-        this.before = new Date().getTime()
-      }
+//      if (!this.load) {
+      this.before = new Date().getTime()
+//      }
       this.interval = 1000.0 / this.fps
       setInterval(this.coreLoop, this.interval)
     }

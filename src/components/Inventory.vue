@@ -37,11 +37,11 @@
                         <p class="control">
                             <button class="button is-danger" @click="remove(item)">Remove</button>
                         </p>
-                        <p class="control">
-                            <button class="button is-primary" @click="send({item, target: 'warehouse'})"
-                                    v-bind:disabled="warehouse.size >= warehouseSize">Send to warehouse
-                            </button>
-                        </p>
+                        <!--<p class="control">-->
+                            <!--<button class="button is-primary" @click="send({item, target: 'warehouse'})"-->
+                                    <!--v-bind:disabled="warehouse.size >= warehouseSize">Send to warehouse-->
+                            <!--</button>-->
+                        <!--</p>-->
                     </div>
                 </td>
                 <td v-else>
@@ -52,16 +52,16 @@
                         <p class="control">
                             <button class="button is-danger is-outlined" @click="remove(item)">Remove</button>
                         </p>
-                        <p class="control">
-                            <button class="button is-primary is-outlined" @click="send({item, target: 'warehouse'})"
-                                    v-bind:disabled="warehouse.size >= warehouseSize">Send to warehouse
-                            </button>
-                        </p>
+                        <!--<p class="control">-->
+                            <!--<button class="button is-primary is-outlined" @click="send({item, target: 'warehouse'})"-->
+                                    <!--v-bind:disabled="warehouse.size >= warehouseSize">Send to warehouse-->
+                            <!--</button>-->
+                        <!--</p>-->
                     </div>
                 </td>
             </tr>
             <tr v-if="inventory.length === 0">
-                <td colspan="4">Start grinding to get more items</td>
+                <td colspan="4">Inventory is empty</td>
             </tr>
             </tbody>
         </table>

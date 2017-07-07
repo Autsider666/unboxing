@@ -1,18 +1,35 @@
 <template>
     <nav class="panel">
         <p class="panel-heading">
-            Grinding
+            <router-link to="workshop">
+                Your Workshop
+            </router-link>
         </p>
-        <p class="panel-block" href="#">
-            Location:  {{location.name}}
+        <p class="panel-block">
+        <table>
+            <tr>
+                <th>Scrap: </th>
+                <td class="has-text-right">{{scrap}}</td>
+            </tr>
+        </table>
         </p>
-        <p class="panel-block" href="#">
-            <progress v-bind:value="progress" v-bind:max="location.gearscore"
-                      class="progress is-danger is-small"></progress>
-        </p>
-        <p class="panel-block" href="#">
-            Progress:  {{Math.floor(progress)}}/{{location.gearscore}}
-        </p>
+        <router-link class="panel-block" v-bind:class="inventory.length >= inventorySize ? 'is-warning' : ''" to="inventory">
+            <table>
+                <tr>
+                    <th>Inventory: </th>
+                    <td class="has-text-right">{{inventory.length}} / {{inventorySize}}</td>
+                </tr>
+            </table>
+        </router-link>
+        <router-link class="panel-block" v-bind:class="warehouse.length >= warehouseSize ? 'is-warning' : ''"
+                     to="warehouse">
+            <table>
+                <tr>
+                    <th>Warehouse: </th>
+                    <td class="has-text-right">{{warehouse.length}} / {{warehouseSize}}</td>
+                </tr>
+            </table>
+        </router-link>
     </nav>
 </template>
 
@@ -20,13 +37,16 @@
   import { mapState } from 'vuex'
 
   export default {
-    name: 'StatsTab',
+    name: 'Stats',
     data () {
       return {}
     },
     computed: mapState([
-      'progress',
-      'location'
+      'inventory',
+      'inventorySize',
+      'warehouse',
+      'warehouseSize',
+      'scrap'
     ])
   }
 </script>
@@ -35,3 +55,4 @@
 <style scoped>
 
 </style>
+

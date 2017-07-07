@@ -19,7 +19,8 @@
                                 <strong>Rarity: </strong>
                                 {{item.rarity}}<br/><br/>
                                 <strong>Gearscore: </strong>
-                                <span v-bind:class="item.rarity">{{item.gearscore}}</span> <span v-if="gear[item.type]" v-bind:class="gear[item.type].rarity">({{gear[item.type].gearscore}})</span><br/><br/>
+                                <span v-bind:class="item.rarity">{{item.gearscore}}</span><br/><br/>
+                                <!--<span v-bind:class="item.rarity">{{item.gearscore}}</span> <span v-if="gear[item.type]" v-bind:class="gear[item.type].rarity">({{gear[item.type].gearscore}})</span><br/><br/>-->
                                 <button class="button" @click="chooseItem({crate, item})">Pick</button>
                             </div>
                         </td>

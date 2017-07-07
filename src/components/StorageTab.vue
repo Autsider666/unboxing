@@ -22,7 +22,7 @@
   import { mapState } from 'vuex'
 
   export default {
-    name: 'GearTab',
+    name: 'Storage',
     data () {
       return {}
     },

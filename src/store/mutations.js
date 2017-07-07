@@ -5,14 +5,70 @@
 // for debugging purposes.
 
 import Vue from 'vue'
+import Mechanics from '../assets/mechanics'
 
 export default {
-  grind (state) {
-    let random = Math.random()
-    state.progress += 1 + state.gearscore * random
+  build (state) {
+    state.bot.damage = 0
   },
-  grindIdle (state, times) {
-    state.progress += state.gearscore * times
+  heal (state, amount) {
+    if (state.bot.damage < state.bot.maxHealth && !state.inCombat) {
+      state.bot.damage = Math.max(0, state.bot.damage - amount)
+    }
+  },
+  combatTurn (state) {
+    if (state.inCombat) {
+      if (state.enemy.damage === undefined) Vue.set(state.enemy, 'damage', 0)
+      Vue.set(state.enemy, 'damage', Math.min(state.enemy.maxHealth, state.enemy.damage + Mechanics.attack(state.bot, state.enemy)))
+      if (!state.bot.gear.right || !state.bot.gear.right.defense) {
+        state.bot.attackLeft = !state.bot.attackLeft
+      }
+      if (state.enemy.damage === state.enemy.maxHealth) {
+        state.inCombat = false
+        // console.log('Enemy died!')
+        if (state.inventory.length < state.inventorySize) {
+          state.inventory.unshift(generateCrate(state))
+          notificationHub.notify({
+            title: 'New ' + state.inventory[0].type,
+            text: 'Here, have a ' + state.inventory[0].name
+          })
+        } else {
+          let crate = generateCrate(state)
+          state.warehouse.unshift(choice(crate.items))
+          notificationHub.notify({
+            title: 'New ' + state.warehouse[0].type,
+            text: 'Here, have a ' + state.warehouse[0].name
+          })
+        }
+        return
+      }
+      if (state.bot.damage === undefined) Vue.set(state.bot, 'damage', 0)
+      Vue.set(state.bot, 'damage', Math.min(state.bot.maxHealth, state.bot.damage + Mechanics.attack(state.enemy, state.bot)))
+      // if (!state.enemy.gear.right || !state.enemy.gear.right.defense) {
+      //   state.enemy.attackLeft = !state.enemy.attackLeft
+      // }
+      if (state.bot.damage === state.bot.maxHealth) {
+        state.inCombat = false
+        // console.log('Your bot died!')
+      }
+    }
+  },
+  loadEnemy (state, enemy) {
+    Vue.set(state, 'enemy', JSON.parse(JSON.stringify(enemy)))
+  },
+  startCombat (state) {
+    // console.log('Starting combat!')
+    state.inCombat = true
+  },
+  toggleIdleCombat (state) {
+    state.enableIdleCombat = !state.enableIdleCombat
+  },
+  toggleIdleHealing (state) {
+    state.enableIdleHealing = !state.enableIdleHealing
+  },
+  queueEnemy (state, enemy) {
+    Vue.set(state, 'next', enemy)
+    Vue.set(state.next, 'damage', 0)
   },
   goalReached (state) {
     while (state.progress >= state.location.gearscore) {
@@ -36,26 +92,26 @@ export default {
         for (let j in crate.items) {
           if (crate.items[j] === item) {
             state.inventory.splice(i, 1)
-            state.inventory.unshift(item)
-            break
-          }
-        }
-      }
-      Vue.set(state.inventory[i], 'open', false)
-    }
-
-    for (let i in state.warehouse) {
-      if (state.warehouse[i] === crate) {
-        for (let j in crate.items) {
-          if (crate.items[j] === item) {
-            state.warehouse.splice(i, 1)
             state.warehouse.unshift(item)
             break
           }
         }
       }
-      Vue.set(state.warehouse[i], 'open', false)
+      // Vue.set(state.inventory[i], 'open', false)
     }
+
+    // for (let i in state.warehouse) {
+    //   if (state.warehouse[i] === crate) {
+    //     for (let j in crate.items) {
+    //       if (crate.items[j] === item) {
+    //         state.warehouse.splice(i, 1)
+    //         state.warehouse.unshift(item)
+    //         break
+    //       }
+    //     }
+    //   }
+    //   Vue.set(state.warehouse[i], 'open', false)
+    // }
   },
   send (state, {item, target}) {
     if (state[target].length >= state[target + 'Size']) {
@@ -127,6 +183,7 @@ export default {
     }
   },
   open (state, item) {
+    console.log('Open', item)
     for (let i in state.inventory) {
       if (state.inventory[i] === item) {
         Vue.set(state.inventory[i], 'open', true)
