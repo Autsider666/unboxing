@@ -30,14 +30,14 @@ export default {
           state.inventory.unshift(generateCrate(state))
           notificationHub.notify({
             title: 'New ' + state.inventory[0].type,
-            text: 'Here, have a ' + state.inventory[0].name
+            text: 'Here, have a(n) ' + state.inventory[0].name
           })
         } else {
           let crate = generateCrate(state)
           state.warehouse.unshift(choice(crate.items))
           notificationHub.notify({
             title: 'New ' + state.warehouse[0].type,
-            text: 'Here, have a ' + state.warehouse[0].name
+            text: 'Here, have a(n) ' + state.warehouse[0].name
           })
         }
         return
@@ -183,7 +183,6 @@ export default {
     }
   },
   open (state, item) {
-    console.log('Open', item)
     for (let i in state.inventory) {
       if (state.inventory[i] === item) {
         Vue.set(state.inventory[i], 'open', true)
@@ -267,13 +266,35 @@ function generateName (generator, type = 'Weapon', minLength = 3, maxLength = 5)
 function generateItem (state, crateTemplate) {
   let type = rarityChoice(state.generator.gearSlots, crateTemplate.contains.types).name
   let rarity = rarityChoice(state.generator.rarities, crateTemplate.contains.rarities).name
-
-  return {
+  let gs = Mechanics.getGearscore(state.enemy)
+  let item = {
     name: generateName(state.generator, type),
     type: type,
-    rarity: rarity,
-    gearscore: 1
+    rarity: rarity
   }
+  let mp = 1
+  switch (rarity) {
+    case 'Poor':
+      mp = 0.9
+      break
+    case 'Good':
+      mp = 1.1
+      break
+    case 'Great':
+      mp = 1.2
+      break
+    case 'Amazing':
+      mp = 1.3
+      break
+  }
+  if (type === 'Weapon') {
+    item.minDmg = Math.round((1 + (gs * Math.random())) * mp * 100) / 100
+    item.maxDmg = Math.round((3 + (gs * Math.random())) * mp * 100) / 100
+  } else {
+    item.defense = Math.round(gs * Math.random() * mp * 100) / 100
+  }
+
+  return item
 }
 
 function generateCrate (state) {
@@ -297,6 +318,6 @@ function generateCrate (state) {
     rarity: crateTemplate.rarity,
     items: loot,
     equipped: false,
-    gearscore: 1
+    gearscore: Mechanics.getGearscore(state.enemy)
   }
 }

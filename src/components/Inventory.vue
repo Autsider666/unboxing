@@ -4,9 +4,6 @@
             Inventory
         </h1>
         <unbox-tab></unbox-tab>
-        <!--<div class="notification is-warning" v-if="inventory.length >= inventorySize">-->
-            <!--Warning! Inventory full-->
-        <!--</div>-->
         <table class="table is-striped">
             <thead>
             <tr>

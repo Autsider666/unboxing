@@ -12,7 +12,7 @@
             <tr>
                 <th>Name</th>
                 <th>Type</th>
-                <th>Gear Score</th>
+                <th>Stats</th>
                 <!--<th>Fight</th>-->
                 <!--<th>Body</th>-->
                 <!--<th>Wits</th>-->
@@ -24,7 +24,9 @@
             <tr v-for="item in warehouse" v-if="!item.equipped">
                 <td v-bind:class="item.rarity">{{item.name}}</td>
                 <td>{{item.rarity}} {{item.subtype}} {{item.type}}</td>
-                <td>{{item.gearscore}}</td>
+
+                <td v-if="item.type ==='Weapon'">{{item.minDmg}}-{{item.minDmg}} Dmg</td>
+                <td v-else>{{item.defense}} Defense</td>
                 <!--<td></td>-->
                 <!--<td></td>-->
                 <!--<td></td>-->

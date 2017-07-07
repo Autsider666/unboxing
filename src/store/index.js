@@ -24,7 +24,7 @@ const state = {
   scrap: 0,
   bot: {
     isPlayer: true,
-    name: 'Autsider666',
+    name: 'Your bot',
     con: 10,
     str: 10,
     dex: 10,

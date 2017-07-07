@@ -1,7 +1,7 @@
 <template>
     <nav class="panel">
         <p class="panel-heading">
-            {{bot.name}} ({{mechanics.getGearscore(bot)}} GS)
+            {{bot.name}} <br/>({{mechanics.getGearscore(bot)}} GS)
         </p>
         <p class="panel-block" href="#">
         <table>
