@@ -54,7 +54,7 @@ export default {
         if (state.hammerspace.length < state.hammerspaceSize) {
           state.hammerspace.unshift(generateCrate(state))
           notificationHub.notify({
-            title: 'New ' + state.hammerspace[0].type + ' in your Inventory',
+            title: 'New ' + state.hammerspace[0].type + ' in your Hammerspace',
             text: 'Here, have a(n) ' + state.hammerspace[0].name
           })
         } else if (state.warehouse.length < state.warehouseSize) {

@@ -34,26 +34,101 @@
             </div>
         </div>
 
-        <div class="field is-horizontal">
-            <div class="field-label is-normal">
-                <label class="label">Constitution</label>
-            </div>
-            <div class="field-body">
-                <div class="field has-addons">
-                    <p class="control" @click="minusStat('con')">
-                        <a class="button is-warning" :disabled="prototype.con <= 10">
-                            <i class="fa fa-minus" aria-hidden="true"></i>
-                        </a>
-                    </p>
-                    <p class="control">
-                        <input class="input is-warning" type="text" :value="prototype.con" readonly>
-                    </p>
-                    <p class="control" @click="plusStat('con')">
-                        <a class="button is-warning" :disabled="workshop.statPoints === 0">
-                            <i class="fa fa-plus" aria-hidden="true"></i>
-                        </a>
-                    </p>
+        <div class="columns">
+            <div class="column">
+                <div class="field is-horizontal">
+                    <div class="field-label is-normal">
+                        <label class="label">Constitution</label>
+                    </div>
+                    <div class="field-body">
+                        <div class="field has-addons has-addons-right">
+                            <p class="control" @click="minusStat('con')">
+                                <a class="button is-warning" :disabled="prototype.con <= 10">
+                                    <i class="fa fa-minus" aria-hidden="true"></i>
+                                </a>
+                            </p>
+                            <p class="control">
+                                <input class="input is-warning" type="text" :value="prototype.con" readonly>
+                            </p>
+                            <p class="control" @click="plusStat('con')">
+                                <a class="button is-warning" :disabled="workshop.statPoints === 0">
+                                    <i class="fa fa-plus" aria-hidden="true"></i>
+                                </a>
+                            </p>
+                        </div>
+                    </div>
                 </div>
+
+                <div class="field is-horizontal">
+                    <div class="field-label is-normal">
+                        <label class="label">Strength</label>
+                    </div>
+                    <div class="field-body">
+                        <div class="field has-addons has-addons-right">
+                            <p class="control" @click="minusStat('str')">
+                                <a class="button is-warning" :disabled="prototype.str <= 10">
+                                    <i class="fa fa-minus" aria-hidden="true"></i>
+                                </a>
+                            </p>
+                            <p class="control">
+                                <input class="input is-warning" type="text" :value="prototype.str" readonly>
+                            </p>
+                            <p class="control" @click="plusStat('str')">
+                                <a class="button is-warning" :disabled="workshop.statPoints === 0">
+                                    <i class="fa fa-plus" aria-hidden="true"></i>
+                                </a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="field is-horizontal">
+                    <div class="field-label is-normal">
+                        <label class="label">Dexterity</label>
+                    </div>
+                    <div class="field-body">
+                        <div class="field has-addons has-addons-right">
+                            <p class="control" @click="minusStat('dex')">
+                                <a class="button is-warning" :disabled="prototype.dex <= 10">
+                                    <i class="fa fa-minus" aria-hidden="true"></i>
+                                </a>
+                            </p>
+                            <p class="control">
+                                <input class="input is-warning" type="text" :value="prototype.dex" readonly>
+                            </p>
+                            <p class="control" @click="plusStat('dex')">
+                                <a class="button is-warning" :disabled="workshop.statPoints === 0">
+                                    <i class="fa fa-plus" aria-hidden="true"></i>
+                                </a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="field is-horizontal">
+                    <div class="field-label is-normal">
+                        <label class="label">Intelligence</label>
+                    </div>
+                    <div class="field-body">
+                        <div class="field has-addons has-addons-right has-addons-right">
+                            <p class="control" @click="minusStat('int')">
+                                <a class="button is-warning" :disabled="prototype.int <= 10">
+                                    <i class="fa fa-minus" aria-hidden="true"></i>
+                                </a>
+                            </p>
+                            <p class="control">
+                                <input class="input is-warning" type="text" :value="prototype.int" readonly>
+                            </p>
+                            <p class="control" @click="plusStat('int')">
+                                <a class="button is-warning" :disabled="workshop.statPoints === 0">
+                                    <i class="fa fa-plus" aria-hidden="true"></i>
+                                </a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="column">
                 <div class="field is-horizontal">
                     <div class="field-label is-normal">
                         <label class="label">Hp</label>
@@ -66,29 +141,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
 
-        <div class="field is-horizontal">
-            <div class="field-label is-normal">
-                <label class="label">Strength</label>
-            </div>
-            <div class="field-body">
-                <div class="field has-addons">
-                    <p class="control" @click="minusStat('str')">
-                        <a class="button is-warning" :disabled="prototype.str <= 10">
-                            <i class="fa fa-minus" aria-hidden="true"></i>
-                        </a>
-                    </p>
-                    <p class="control">
-                        <input class="input is-warning" type="text" :value="prototype.str" readonly>
-                    </p>
-                    <p class="control" @click="plusStat('str')">
-                        <a class="button is-warning" :disabled="workshop.statPoints === 0">
-                            <i class="fa fa-plus" aria-hidden="true"></i>
-                        </a>
-                    </p>
-                </div>
                 <div class="field is-horizontal">
                     <div class="field-label is-normal">
                         <label class="label">Damage</label>
@@ -101,29 +154,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
 
-        <div class="field is-horizontal">
-            <div class="field-label is-normal">
-                <label class="label">Dexterity</label>
-            </div>
-            <div class="field-body">
-                <div class="field has-addons">
-                    <p class="control" @click="minusStat('dex')">
-                        <a class="button is-warning" :disabled="prototype.dex <= 10">
-                            <i class="fa fa-minus" aria-hidden="true"></i>
-                        </a>
-                    </p>
-                    <p class="control">
-                        <input class="input is-warning" type="text" :value="prototype.dex" readonly>
-                    </p>
-                    <p class="control" @click="plusStat('dex')">
-                        <a class="button is-warning" :disabled="workshop.statPoints === 0">
-                            <i class="fa fa-plus" aria-hidden="true"></i>
-                        </a>
-                    </p>
-                </div>
                 <div class="field is-horizontal is-right">
                     <div class="field-label is-normal">
                         <label class="label">Hit</label>
@@ -136,29 +167,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
 
-        <div class="field is-horizontal">
-            <div class="field-label is-normal">
-                <label class="label">Intelligence</label>
-            </div>
-            <div class="field-body">
-                <div class="field has-addons">
-                    <p class="control" @click="minusStat('int')">
-                        <a class="button is-warning" :disabled="prototype.int <= 10">
-                            <i class="fa fa-minus" aria-hidden="true"></i>
-                        </a>
-                    </p>
-                    <p class="control">
-                        <input class="input is-warning" type="text" :value="prototype.int" readonly>
-                    </p>
-                    <p class="control" @click="plusStat('int')">
-                        <a class="button is-warning" :disabled="workshop.statPoints === 0">
-                            <i class="fa fa-plus" aria-hidden="true"></i>
-                        </a>
-                    </p>
-                </div>
                 <div class="field is-horizontal is-right">
                     <div class="field-label is-normal">
                         <label class="label">Dodge</label>
@@ -171,19 +180,20 @@
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
 
-        <div class="field is-horizontal">
-            <div class="field-label is-normal">
-                <label class="label">Armor</label>
-            </div>
-            <div class="field-body">
-                <div class="field has-addons">
-                    <p class="control">
-                        <input class="input is-warning" type="text" :value="defense" readonly>
-                    </p>
+                <div class="field is-horizontal">
+                    <div class="field-label is-normal">
+                        <label class="label">Armor</label>
+                    </div>
+                    <div class="field-body">
+                        <div class="field has-addons">
+                            <p class="control">
+                                <input class="input is-warning" type="text" :value="defense" readonly>
+                            </p>
+                        </div>
+                    </div>
                 </div>
+
                 <div class="field is-horizontal is-right">
                     <div class="field-label is-normal">
                         <label class="label">Absorb</label>
