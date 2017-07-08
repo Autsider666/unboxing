@@ -3,9 +3,9 @@
         <p class="panel-heading">
             Storage
         </p>
-        <router-link class="panel-block" v-bind:class="inventory.length >= inventorySize ? 'is-warning' : ''" to="/">
-            Inventory: {{inventory.length}} / {{inventorySize}} &nbsp&nbsp&nbsp&nbsp
-            <span v-if="inventory.length >= inventorySize">
+        <router-link class="panel-block" v-bind:class="hammerspace.length >= hammerspaceSize ? 'is-warning' : ''" to="/">
+            Inventory: {{hammerspace.length}} / {{hammerspaceSize}} &nbsp&nbsp&nbsp&nbsp
+            <span v-if="hammerspace.length >= hammerspaceSize">
                 Inventory full!
             </span>
         </router-link>
@@ -27,8 +27,8 @@
       return {}
     },
     computed: mapState([
-      'inventory',
-      'inventorySize',
+      'hammerspace',
+      'hammerspaceSize',
       'warehouse',
       'warehouseSize'
     ])

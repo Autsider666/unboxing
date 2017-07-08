@@ -1,10 +1,6 @@
 <template>
-    <html>
-    <head>
-        <link rel="stylesheet" href="./static/css/font-awesome.min.css">
-    </head>
-    <body>
     <div id="app">
+        <link rel="stylesheet" href="./static/css/font-awesome.min.css">
         <notification/>
         <game-core/>
         <div class="section">
@@ -21,8 +17,8 @@
                 </main>
                 <aside class="column is-2-widescreen is-3-desktop is-4-tablet">
                     <nav class="menu">
-                        <bot-tab :bot="$store.state.bot"></bot-tab>
-                        <bot-tab :bot="$store.state.enemy"></bot-tab>
+                        <bot-tab :bot="$store.state.bot" type="player"></bot-tab>
+                        <bot-tab :bot="$store.state.enemy" type="enemy"></bot-tab>
                     </nav>
                 </aside>
             </div>
@@ -47,8 +43,6 @@
         <!--</div>-->
         <!--</div>-->
     </div>
-    </body>
-    </html>
 </template>
 
 <script>
@@ -58,6 +52,23 @@
 </script>
 
 <style>
+
+    html, body {
+        height: 100%;
+    }
+
+    .tabs a:hover {
+        color: #4a4a4a !important;
+    }
+
+    .tabs a {
+        color: #dbdbdb !important;
+    }
+
+    .tabs .is-active a {
+        color: #4a4a4a !important;
+    }
+
     @media screen and (min-width: 1384px) {
         .container {
             /*max-width: 1344px;*/
@@ -66,7 +77,15 @@
         }
     }
 
-    .panel-heading a {
+    .hero {
+        background-color: inherit !important;
+    }
+
+    .modal .panel-heading a {
+        color: inherit !important;
+    }
+
+    .panel-heading a:hover {
         color: inherit !important;
     }
 

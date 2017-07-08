@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="modal is-active" v-for="crate in inventory" v-if="crate.type === 'Crate' && crate.open">
+        <div class="modal is-active" v-for="crate in hammerspace" v-if="crate.type === 'Crate' && crate.open">
             <div class="modal-background"></div>
             <div class="modal-content">
                 <nav class="panel">
@@ -75,7 +75,7 @@
       remove: 'remove'
     }),
     computed: mapState({
-      inventory: 'inventory',
+      hammerspace: 'hammerspace',
       warehouse: 'warehouse',
       gear: 'gear',
       bot: 'bot'

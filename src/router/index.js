@@ -1,8 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Intro from '@/components/Intro'
-import Inventory from '@/components/Inventory'
-import Warehouse from '@/components/Warehouse'
 import Battlefield from '@/components/Battlefield'
 import Workshop from '@/components/Workshop'
 
@@ -15,25 +13,48 @@ export default new Router({
       name: 'Intro',
       component: Intro
     },
-    {
-      path: '/inventory',
-      name: 'Inventory',
-      component: Inventory
-    },
-    {
-      path: '/warehouse',
-      name: 'Warehouse',
-      component: Warehouse
-    },
+    // {
+    //   path: '/warehouse',
+    //   name: 'Warehouse',
+    //   component: Warehouse
+    // },
     {
       path: '/battlefield',
       name: 'Battlefield',
       component: Battlefield
     },
     {
-      path: '/workshop',
-      name: 'Workshop',
-      component: Workshop
+      name: 'Warehouse',
+      path: '/workshop/warehouse',
+      component: Workshop,
+      props: {
+        tab: 'warehouse'
+      }
+    },
+    {
+      name: 'Hammerspace',
+      path: '/workshop/hammerspace',
+      component: Workshop,
+      props: {
+        tab: 'hammerspace'
+      }
+    },
+    {
+      name: 'Current bot',
+      path: '/workshop/current',
+      component: Workshop,
+      props: {
+        tab: 'current'
+      }
+    },
+    {
+      name: 'Prototype',
+      path: '/workshop/prototype',
+      component: Workshop,
+      props: {
+        tab: 'prototype'
+      },
+      alias: '/workshop'
     }
   ]
 })

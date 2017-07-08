@@ -16,13 +16,61 @@ Vue.use(Vuex)
 const state = {
   delta: 0,
   healingPerSecond: 5,
-  enableIdleHealing: true,
-  enableIdleCombat: true,
+  enableIdleHealing: false,
+  enableIdleCombat: false,
   attackDuration: 400,
   fps: 15.0,
-  inCombat: true,
+  inCombat: false,
   scrap: 0,
-  bot: {
+  enemy: null,
+  next: null,
+  bot: null,
+  // bot: {
+  //   isPlayer: true,
+  //   name: 'Your bot',
+  //   con: 10,
+  //   str: 10,
+  //   dex: 10,
+  //   int: 10,
+  //   attackLeft: true,
+  //   gear: {
+  //     left: null,
+  //     right: null,
+  //     Chest: null,
+  //     Head: null,
+  //     Legs: null,
+  //     Feet: null
+  //   },
+  //   actions: [],
+  //   damage: 0
+  // },
+  // enemy: {
+  //   name: 'Infant',
+  //   lvl: 1,
+  //   minLvl: 1,
+  //   con: 1,
+  //   str: 5,
+  //   dex: 5,
+  //   int: 5,
+  //   minDmg: 1,
+  //   maxDmg: 3,
+  //   defense: 0,
+  //   damage: 0
+  // },
+  // next: {
+  //   name: 'Infant',
+  //   lvl: 1,
+  //   minLvl: 1,
+  //   con: 1,
+  //   str: 5,
+  //   dex: 5,
+  //   int: 5,
+  //   minDmg: 1,
+  //   maxDmg: 3,
+  //   defense: 0,
+  //   damage: 0
+  // },
+  prototype: {
     isPlayer: true,
     name: 'Your bot',
     con: 10,
@@ -41,42 +89,18 @@ const state = {
     actions: [],
     damage: 0
   },
-  enemy: {
-    name: 'Infant',
-    lvl: 1,
-    minLvl: 1,
-    con: 1,
-    str: 5,
-    dex: 5,
-    int: 5,
-    minDmg: 1,
-    maxDmg: 3,
-    defense: 0,
-    damage: 0
-  },
-  next: {
-    name: 'Infant',
-    lvl: 1,
-    minLvl: 1,
-    con: 1,
-    str: 5,
-    dex: 5,
-    int: 5,
-    minDmg: 1,
-    maxDmg: 3,
-    defense: 0,
-    damage: 0
-  },
   enemies: enemies,
   gearscore: 0,
   progress: 0,
-  inventory: [],
-  inventorySize: 10,
+  hammerspace: [],
+  hammerspaceSize: 10,
   warehouse: [],
   warehouseSize: 50,
   workshop: {
+    statPoints: 10,
     lvl: 1,
-    exp: 0
+    exp: 0,
+    expToNext: 70
   },
   generator: {
     weapons: weapons,
@@ -92,6 +116,7 @@ const state = {
 // A Vuex instance is created by combining the state, mutations, actions,
 // and getters.
 export default new Vuex.Store({
+  strict: true,
   state,
   getters,
   actions,

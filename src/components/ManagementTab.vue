@@ -1,12 +1,8 @@
 <template>
     <div>
         <button class="button is-light is-large is-outlined" @click="startCombat"
-                :disabled="inCombat || enableIdleCombat">
+                :disabled="!bot || !enemy || inCombat || enableIdleCombat">
             Fight
-        </button>
-        <button class="button is-light is-large is-outlined" @click="build"
-                :disabled="inCombat || bot.damage !== bot.maxHealth">
-            Rebuild
         </button>
         <button class="button is-light is-large" @click="toggleIdleCombat"
                 v-bind:class="enableIdleCombat ? '' : 'is-inverted'">
@@ -53,7 +49,8 @@
       'enableIdleCombat',
       'enableIdleHealing',
       'inCombat',
-      'bot'
+      'bot',
+      'enemy'
     ])
   }
 </script>

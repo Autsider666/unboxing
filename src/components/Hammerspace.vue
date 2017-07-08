@@ -1,8 +1,5 @@
 <template>
     <div class="event-timeline">
-        <h1 class="title">
-            Inventory
-        </h1>
         <unbox-tab></unbox-tab>
         <table class="table is-striped">
             <thead>
@@ -18,7 +15,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr v-for="item in inventory" v-if="!item.equipped">
+            <tr v-for="item in hammerspace" v-if="!item.equipped">
                 <td v-bind:class="item.rarity">{{item.name}}</td>
                 <td>{{item.rarity}} {{item.subtype}} {{item.type}}</td>
                 <td>{{item.gearscore}}</td>
@@ -57,8 +54,8 @@
                     </div>
                 </td>
             </tr>
-            <tr v-if="inventory.length === 0">
-                <td colspan="4">Inventory is empty</td>
+            <tr v-if="hammerspace.length === 0">
+                <td colspan="4">Hammerspace is empty</td>
             </tr>
             </tbody>
         </table>
@@ -69,7 +66,7 @@
   import { mapState, mapMutations } from 'vuex'
 
   export default {
-    name: 'Inventory',
+    name: 'Hammerspace',
     data () {
       return {}
     },
@@ -81,8 +78,8 @@
       'send'
     ]),
     computed: mapState([
-      'inventory',
-      'inventorySize',
+      'hammerspace',
+      'hammerspaceSize',
       'warehouse',
       'warehouseSize'
     ])

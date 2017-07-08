@@ -8,8 +8,32 @@ import Vue from 'vue'
 import Mechanics from '../assets/mechanics'
 
 export default {
+  updatePrototype (state, {field, value}) {
+    console.log(field, value)
+    Object.assign(state.prototype, {
+      [field]: value
+    })
+  },
+  minusStat (state, stat) {
+    if (state.prototype[stat] > 10) {
+      state.prototype[stat]--
+      state.workshop.statPoints++
+    }
+  },
+  plusStat (state, stat) {
+    if (state.workshop.statPoints > 0) {
+      state.prototype[stat]++
+      state.workshop.statPoints--
+    }
+  },
+  updatePrototypeGear (state, {field, value}) {
+    console.log(field, value)
+    Object.assign(state.prototype.gear, {
+      [field]: value
+    })
+  },
   build (state) {
-    state.bot.damage = 0
+    Vue.set(state, 'bot', JSON.parse(JSON.stringify(state.prototype)))
   },
   heal (state, amount) {
     if (state.bot.damage < state.bot.maxHealth && !state.inCombat) {
@@ -19,18 +43,19 @@ export default {
   combatTurn (state) {
     if (state.inCombat) {
       if (state.enemy.damage === undefined) Vue.set(state.enemy, 'damage', 0)
-      Vue.set(state.enemy, 'damage', Math.min(state.enemy.maxHealth, state.enemy.damage + Mechanics.attack(state.bot, state.enemy)))
+      Vue.set(state.enemy, 'damage', state.enemy.damage + Mechanics.attack(state.bot, state.enemy))
       if (!state.bot.gear.right || !state.bot.gear.right.defense) {
         state.bot.attackLeft = !state.bot.attackLeft
       }
-      if (state.enemy.damage === state.enemy.maxHealth) {
+      if (state.enemy.damage >= state.enemy.maxHealth) {
         state.inCombat = false
+        state.workshop.exp += Mechanics.getExperience(state)
         // console.log('Enemy died!')
-        if (state.inventory.length < state.inventorySize) {
-          state.inventory.unshift(generateCrate(state))
+        if (state.hammerspace.length < state.hammerspaceSize) {
+          state.hammerspace.unshift(generateCrate(state))
           notificationHub.notify({
-            title: 'New ' + state.inventory[0].type + ' in your Inventory',
-            text: 'Here, have a(n) ' + state.inventory[0].name
+            title: 'New ' + state.hammerspace[0].type + ' in your Inventory',
+            text: 'Here, have a(n) ' + state.hammerspace[0].name
           })
         } else if (state.warehouse.length < state.warehouseSize) {
           let crate = generateCrate(state)
@@ -49,6 +74,7 @@ export default {
       // }
       if (state.bot.damage === state.bot.maxHealth) {
         state.inCombat = false
+        state.workshop.exp += Mechanics.getExperience(state)
         // console.log('Your bot died!')
       }
     }
@@ -70,20 +96,40 @@ export default {
     Vue.set(state, 'next', enemy)
     Vue.set(state.next, 'damage', 0)
   },
+  levelUp (state) {
+    if (state.workshop.exp >= state.workshop.expToNext) {
+      state.workshop.exp -= state.workshop.expToNext
+      let mp = 1.3
+      if (state.workshop.lvl > 180) {
+        mp = 1.03
+      } else if (state.workshop.lvl > 150) {
+        mp = 1.05
+      } else if (state.workshop.lvl > 80) {
+        mp = 1.08
+      } else if (state.workshop.lvl > 35) {
+        mp = 1.010
+      }
+
+      state.workshop.expToNext = Math.round(state.workshop.expToNext * mp)
+      state.workshop.lvl++
+      state.workshop.statPoints += 4
+      console.log('Reached level', state.workshop.lvl)
+    }
+  },
   chooseItem (state, {crate, item}) {
-    for (let i in state.inventory) {
-      if (state.inventory[i] === crate) {
+    for (let i in state.hammerspace) {
+      if (state.hammerspace[i] === crate) {
         for (let j in crate.items) {
           if (crate.items[j] === item) {
             if (state.warehouse.length < state.warehouseSize) {
-              state.inventory.splice(i, 1)
+              state.hammerspace.splice(i, 1)
               state.warehouse.unshift(item)
             }
             break
           }
         }
       } else {
-        Vue.set(state.inventory[i], 'open', false)
+        Vue.set(state.hammerspace[i], 'open', false)
       }
     }
 
@@ -105,9 +151,9 @@ export default {
       return
     }
     let found = false
-    for (let i in state.inventory) {
-      if (state.inventory[i] === item) {
-        state.inventory.splice(i, 1)
+    for (let i in state.hammerspace) {
+      if (state.hammerspace[i] === item) {
+        state.hammerspace.splice(i, 1)
         state[target].unshift(item)
         found = true
         break
@@ -126,13 +172,13 @@ export default {
   },
   equip (state, item) {
     let found = false
-    for (let i in state.inventory) {
-      if (state.inventory[i] === item) {
+    for (let i in state.hammerspace) {
+      if (state.hammerspace[i] === item) {
         // if (state.gear[item.type]) {
-        //   // state.inventory.push(state.gear[item.type])
-        //   // state.inventory.splice(i, 1)
+        //   // state.hammerspace.push(state.gear[item.type])
+        //   // state.hammerspace.splice(i, 1)
         // }
-        state.inventory.splice(i, 1)
+        state.hammerspace.splice(i, 1)
         Vue.set(state.gear, item.type, item)
       }
     }
@@ -140,7 +186,7 @@ export default {
       for (let i in state.warehouse) {
         if (state.warehouse[i] === item) {
           // if (state.gear[item.type]) {
-          //   // state.inventory.push(state.gear[item.type])
+          //   // state.hammerspace.push(state.gear[item.type])
           //   // state.warehouse.splice(i, 1)
           // }
           state.warehouse.splice(i, 1)
@@ -156,9 +202,9 @@ export default {
     state.gearscore = gs
   },
   remove (state, item) {
-    for (let i in state.inventory) {
-      if (state.inventory[i] === item) {
-        state.inventory.splice(i, 1)
+    for (let i in state.hammerspace) {
+      if (state.hammerspace[i] === item) {
+        state.hammerspace.splice(i, 1)
         break
       }
     }
@@ -170,12 +216,12 @@ export default {
     }
   },
   open (state, item) {
-    for (let i in state.inventory) {
-      if (state.inventory[i] === item) {
-        Vue.set(state.inventory[i], 'open', true)
+    for (let i in state.hammerspace) {
+      if (state.hammerspace[i] === item) {
+        Vue.set(state.hammerspace[i], 'open', true)
         break
       } else {
-        Vue.set(state.inventory[i], 'open', false)
+        Vue.set(state.hammerspace[i], 'open', false)
       }
     }
     for (let i in state.warehouse) {
@@ -188,11 +234,11 @@ export default {
     }
   },
   close (state) {
-    for (let i in state.inventory) {
-      Vue.set(state.inventory[i], 'open', false)
+    for (let i in state.hammerspace) {
+      Vue.set(state.hammerspace[i], 'open', false)
     }
     for (let i in state.warehouse) {
-      Vue.set(state.inventory[i], 'open', false)
+      Vue.set(state.hammerspace[i], 'open', false)
     }
   },
   loadGenerator (state) {

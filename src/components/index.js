@@ -8,3 +8,7 @@ Vue.component('bot-tab', require('./BotTab.vue'))
 Vue.component('management-tab', require('./ManagementTab.vue'))
 Vue.component('stats-tab', require('./StatsTab.vue'))
 Vue.component('training-tab', require('./TrainingTab.vue'))
+
+Vue.component('warehouse', require('./Warehouse.vue'))
+Vue.component('hammerspace', require('./Hammerspace.vue'))
+Vue.component('prototype', require('./Prototype.vue'))

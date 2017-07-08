@@ -50,27 +50,42 @@ export default {
   absorb (bot, dmg) {
     return dmg - dmg * this.getAbsorb(bot)
   },
-  // getExperience (bot, enemy) {
-  //   let blockMod = 1.0
-  //   let expMod = 1.0
-  //   if (enemy.isPlayer) {
-  //     if (enemy.level < 300) {
-  //       expMod = 1.0
-  //     } else if (enemy.level < 450) {
-  //       expMod = 1.3
-  //     } else if (enemy.level < 600) {
-  //       expMod = 1.6
-  //     } else if (enemy.level < 750) {
-  //       expMod = 1.9
-  //     } else if (enemy.level < 900) {
-  //       expMod = 2.2
-  //     } else {
-  //       expMod = 2.5
-  //     }
-  //   }
-  //
-  //   return enemy.level * [Sthis.getHealth(enemy.health)] * bot.int / [Variable] / 2 * expMod * blockMod
-  // },
+  getExperience (state) {
+    let blockMod = 1.0
+    let expMod = 1.0
+    if (state.enemy.level < 300) {
+      expMod = 1.0
+    } else if (state.enemy.level < 450) {
+      expMod = 1.3
+    } else if (state.enemy.level < 600) {
+      expMod = 1.6
+    } else if (state.enemy.level < 750) {
+      expMod = 1.9
+    } else if (state.enemy.level < 900) {
+      expMod = 2.2
+    } else {
+      expMod = 2.5
+    }
+    let variable = 1
+    if (state.enemy.damage >= state.enemy.maxHealth) { // win
+      if (state.enemy.lvl < state.workshop.lvl) { // lower
+        variable = 150
+        console.log('Won against a weaker bot')
+      } else { // higher or equal
+        variable = 100
+        console.log('Won against a stronger or equal bot')
+      }
+    } else { // lose
+      if (state.enemy.lvl < state.workshop.lvl) { // lower
+        variable = 300
+        console.log('Lost against a weaker bot')
+      } else { // higher or equal
+        variable = 200
+        console.log('Lost against a stronger or equal bot')
+      }
+    }
+    return Math.round(state.enemy.lvl * state.enemy.damage * state.bot.int / variable / 2 * expMod * blockMod)
+  },
   getAttackRating (bot) {
     return bot.dex * 2 - 8
   },

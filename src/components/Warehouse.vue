@@ -1,8 +1,5 @@
 <template>
     <div class="event-timeline">
-        <h1 class="title">
-            Warehouse
-        </h1>
         <unbox-tab></unbox-tab>
         <!--<div class="notification is-warning" v-if="warehouse.length >= warehouseSize">-->
             <!--Warning! Warehouse full-->
@@ -34,12 +31,12 @@
                 <td v-if="item.type == 'Crate'">
                     <button class="button" @click="open(item)">Open</button>
                     <button class="button" @click="remove(item)">Remove</button>
-                    <!--<button class="button" @click="send({item, target: 'inventory'})" v-bind:disabled="inventory.length >= inventorySize">Send to inventory</button>-->
+                    <!--<button class="button" @click="send({item, targehammerspacetory'})" v-bind:disablhammerspacetory.lengthhammerspaceSizeSize">Sendhammerspacetory</button>-->
                 </td>
                 <td v-else>
                     <button class="button" @click="equip(item)">Equip</button>
                     <button class="button" @click="remove(item)">Remove</button>
-                    <!--<button class="button" @click="send({item, target: 'inventory'})" v-bind:disabled="inventory.length >= inventorySize">Send to inventory</button>-->
+                    <!--<button class="button" @click="send({item, targehammerspacetory'})" v-bind:disablhammerspacetory.lengthhammerspaceSizeSize">Sendhammerspacetory</button>-->
                 </td>
             </tr>
             <tr v-if="warehouse.length === 0">
@@ -68,8 +65,8 @@
     computed: mapState([
       'warehouse',
       'warehouseSize',
-      'inventory',
-      'inventorySize'
+      'hammerspace',
+      'hammerspaceSize'
     ])
   }
 </script>

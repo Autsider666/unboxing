@@ -10,13 +10,13 @@
             <!--<a href="#">Hard</a>-->
             <!--<a href="#">Impossible</a>-->
             <!--</p>-->
-            <a v-for="e in enemies" v-bind:class="e.name === enemy.name ? 'is-active' : ''" class="panel-block"
+            <a v-for="e in enemies" v-bind:class="enemy && e.name === enemy.name ? 'is-active' : ''" class="panel-block"
                @click="queueEnemy(e)">
                 <table>
                     <tr>
                         <!--"e.name === next.name && e.name !== enemy.name"-->
-                        <th v-if="e.name === enemy.name || e.name === next.name"
-                            v-bind:class="e.name !== enemy.name && e.name === next.name ? 'has-text-right' : ''">
+                        <th v-if="enemy && e.name === enemy.name || next && e.name === next.name"
+                            v-bind:class="enemy && next && e.name !== enemy.name && e.name === next.name ? 'has-text-right' : ''">
                             {{e.name}}
                         </th>
                         <th v-else>
