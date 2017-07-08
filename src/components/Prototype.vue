@@ -2,7 +2,7 @@
     <div>
         <button class="button is-light is-large is-outlined" @click="build"
                 :disabled="inCombat || bot && bot.damage !== bot.maxHealth">
-            Build prototype
+            Construct prototype
         </button>
         <br><br>
         <!--<code>{{prototype}}</code><br><br>-->
