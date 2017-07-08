@@ -54,6 +54,18 @@
                         </a>
                     </p>
                 </div>
+                <div class="field is-horizontal">
+                    <div class="field-label is-normal">
+                        <label class="label">Hp</label>
+                    </div>
+                    <div class="field-body">
+                        <div class="field has-addons">
+                            <p class="control">
+                                <input class="input is-warning" type="text" :value="health" readonly>
+                            </p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -76,6 +88,18 @@
                             <i class="fa fa-plus" aria-hidden="true"></i>
                         </a>
                     </p>
+                </div>
+                <div class="field is-horizontal">
+                    <div class="field-label is-normal">
+                        <label class="label">Damage</label>
+                    </div>
+                    <div class="field-body">
+                        <div class="field has-addons">
+                            <p class="control">
+                                <input class="input is-warning" type="text" :value="damage" readonly>
+                            </p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -100,6 +124,18 @@
                         </a>
                     </p>
                 </div>
+                <div class="field is-horizontal is-right">
+                    <div class="field-label is-normal">
+                        <label class="label">Hit</label>
+                    </div>
+                    <div class="field-body">
+                        <div class="field has-addons">
+                            <p class="control">
+                                <input class="input is-warning" type="text" :value="attackRating" readonly>
+                            </p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -123,6 +159,43 @@
                         </a>
                     </p>
                 </div>
+                <div class="field is-horizontal is-right">
+                    <div class="field-label is-normal">
+                        <label class="label">Dodge</label>
+                    </div>
+                    <div class="field-body">
+                        <div class="field has-addons">
+                            <p class="control">
+                                <input class="input is-warning" type="text" :value="defenseRating" readonly>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="field is-horizontal">
+            <div class="field-label is-normal">
+                <label class="label">Armor</label>
+            </div>
+            <div class="field-body">
+                <div class="field has-addons">
+                    <p class="control">
+                        <input class="input is-warning" type="text" :value="defense" readonly>
+                    </p>
+                </div>
+                <div class="field is-horizontal is-right">
+                    <div class="field-label is-normal">
+                        <label class="label">Absorb</label>
+                    </div>
+                    <div class="field-body">
+                        <div class="field has-addons">
+                            <p class="control">
+                                <input class="input is-warning" type="text" :value="absorb" readonly>
+                            </p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -130,6 +203,7 @@
 
 <script>
   import { mapState } from 'vuex'
+  import Mechanics from '../assets/mechanics'
 
   export default {
     name: 'Prototype',
@@ -158,7 +232,25 @@
       inCombat: 'inCombat',
       bot: 'bot',
       workshop: 'workshop',
-      prototype: 'prototype'
+      prototype: 'prototype',
+      health () {
+        return Mechanics.getMaxHealth(this.prototype)
+      },
+      damage () {
+        return Mechanics.getDamage(this.prototype, 1) + '-' + Mechanics.getDamage(this.prototype, 3)
+      },
+      attackRating () {
+        return Mechanics.getAttackRating(this.prototype)
+      },
+      defenseRating () {
+        return Mechanics.getDefenseRating(this.prototype)
+      },
+      defense () {
+        return Mechanics.getDefense(this.prototype)
+      },
+      absorb () {
+        return Mechanics.getAbsorb(this.prototype) + '%'
+      }
     })
   }
 </script>
