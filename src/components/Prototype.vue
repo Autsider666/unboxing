@@ -1,41 +1,42 @@
 <template>
     <div>
         <button class="button is-light is-large is-outlined" @click="build"
-                :disabled="inCombat || bot && bot.damage !== bot.maxHealth">
-            Construct prototype
+                :disabled="inCombat">
+            <span v-if="bot">Replace</span>
+            <span v-else>Construct</span>
+            &nbsp;prototype
         </button>
         <br><br>
-        <!--<code>{{prototype}}</code><br><br>-->
-
-        <div class="field is-horizontal">
-            <div class="field-label is-normal">
-                <label class="label">Name</label>
-            </div>
-            <div class="field-body">
-                <div class="field has-addons">
-                    <p class="control">
-                        <input class="input is-warning" type="text" :value="prototype.name"
-                               v-on:keyup.stop="updatePrototype('name', $event.target.value)"/>
-                    </p>
-                </div>
-            </div>
-        </div>
-
-        <div class="field is-horizontal">
-            <div class="field-label is-normal">
-                <label class="label">Spare stat points</label>
-            </div>
-            <div class="field-body">
-                <div class="field has-addons">
-                    <p class="control">
-                        <input class="input is-warning" type="text" :value="workshop.statPoints" readonly>
-                    </p>
-                </div>
-            </div>
-        </div>
 
         <div class="columns">
-            <div class="column">
+            <div class="column is-4">
+                <div class="field is-horizontal">
+                    <div class="field-label is-normal">
+                        <label class="label">Name</label>
+                    </div>
+                    <div class="field-body">
+                        <div class="field has-addons has-addons-right">
+                            <p class="control long">
+                                <input class="input editable" type="text" :value="prototype.name"
+                                       v-on:keyup.stop="updatePrototype('name', $event.target.value)"/>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="field is-horizontal">
+                    <div class="field-label is-normal">
+                        <label class="label">Statpoints</label>
+                    </div>
+                    <div class="field-body">
+                        <div class="field has-addons has-addons-right">
+                            <p class="control long">
+                                <input class="input readonly" type="text" :value="workshop.statPoints" readonly>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="field is-horizontal">
                     <div class="field-label is-normal">
                         <label class="label">Constitution</label>
@@ -47,8 +48,8 @@
                                     <i class="fa fa-minus" aria-hidden="true"></i>
                                 </a>
                             </p>
-                            <p class="control">
-                                <input class="input is-warning" type="text" :value="prototype.con" readonly>
+                            <p class="control short">
+                                <input class="input readonly" type="text" :value="prototype.con" readonly>
                             </p>
                             <p class="control" @click="plusStat('con')">
                                 <a class="button is-warning" :disabled="workshop.statPoints === 0">
@@ -70,8 +71,8 @@
                                     <i class="fa fa-minus" aria-hidden="true"></i>
                                 </a>
                             </p>
-                            <p class="control">
-                                <input class="input is-warning" type="text" :value="prototype.str" readonly>
+                            <p class="control short">
+                                <input class="input readonly" type="text" :value="prototype.str" readonly>
                             </p>
                             <p class="control" @click="plusStat('str')">
                                 <a class="button is-warning" :disabled="workshop.statPoints === 0">
@@ -93,8 +94,8 @@
                                     <i class="fa fa-minus" aria-hidden="true"></i>
                                 </a>
                             </p>
-                            <p class="control">
-                                <input class="input is-warning" type="text" :value="prototype.dex" readonly>
+                            <p class="control short">
+                                <input class="input readonly" type="text" :value="prototype.dex" readonly>
                             </p>
                             <p class="control" @click="plusStat('dex')">
                                 <a class="button is-warning" :disabled="workshop.statPoints === 0">
@@ -110,14 +111,14 @@
                         <label class="label">Intelligence</label>
                     </div>
                     <div class="field-body">
-                        <div class="field has-addons has-addons-right has-addons-right">
+                        <div class="field has-addons has-addons-right">
                             <p class="control" @click="minusStat('int')">
                                 <a class="button is-warning" :disabled="prototype.int <= 10">
                                     <i class="fa fa-minus" aria-hidden="true"></i>
                                 </a>
                             </p>
-                            <p class="control">
-                                <input class="input is-warning" type="text" :value="prototype.int" readonly>
+                            <p class="control short">
+                                <input class="input readonly" type="text" :value="prototype.int" readonly>
                             </p>
                             <p class="control" @click="plusStat('int')">
                                 <a class="button is-warning" :disabled="workshop.statPoints === 0">
@@ -128,28 +129,18 @@
                     </div>
                 </div>
             </div>
-            <div class="column">
-                <div class="field is-horizontal">
-                    <div class="field-label is-normal">
-                        <label class="label">Hp</label>
-                    </div>
-                    <div class="field-body">
-                        <div class="field has-addons">
-                            <p class="control">
-                                <input class="input is-warning" type="text" :value="health" readonly>
-                            </p>
-                        </div>
-                    </div>
-                </div>
 
+            <div class="column"></div>
+
+            <div class="column is-4">
                 <div class="field is-horizontal">
                     <div class="field-label is-normal">
-                        <label class="label">Damage</label>
+                        <label class="label has-text-left">Armor</label>
                     </div>
                     <div class="field-body">
-                        <div class="field has-addons">
-                            <p class="control">
-                                <input class="input is-warning" type="text" :value="damage" readonly>
+                        <div class="field has-addons has-addons-right">
+                            <p class="control long">
+                                <input class="input readonly" type="text" :value="defense" readonly>
                             </p>
                         </div>
                     </div>
@@ -157,25 +148,12 @@
 
                 <div class="field is-horizontal is-right">
                     <div class="field-label is-normal">
-                        <label class="label">Hit</label>
+                        <label class="label has-text-left">Absorb</label>
                     </div>
                     <div class="field-body">
-                        <div class="field has-addons">
-                            <p class="control">
-                                <input class="input is-warning" type="text" :value="attackRating" readonly>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="field is-horizontal is-right">
-                    <div class="field-label is-normal">
-                        <label class="label">Dodge</label>
-                    </div>
-                    <div class="field-body">
-                        <div class="field has-addons">
-                            <p class="control">
-                                <input class="input is-warning" type="text" :value="defenseRating" readonly>
+                        <div class="field has-addons has-addons-right">
+                            <p class="control long">
+                                <input class="input readonly" type="text" :value="absorb" readonly>
                             </p>
                         </div>
                     </div>
@@ -183,12 +161,25 @@
 
                 <div class="field is-horizontal">
                     <div class="field-label is-normal">
-                        <label class="label">Armor</label>
+                        <label class="label has-text-left">Hp</label>
                     </div>
                     <div class="field-body">
-                        <div class="field has-addons">
-                            <p class="control">
-                                <input class="input is-warning" type="text" :value="defense" readonly>
+                        <div class="field has-addons has-addons-right">
+                            <p class="control long">
+                                <input class="input readonly" type="text" :value="health" readonly>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="field is-horizontal">
+                    <div class="field-label is-normal">
+                        <label class="label has-text-left">Damage</label>
+                    </div>
+                    <div class="field-body">
+                        <div class="field has-addons has-addons-right">
+                            <p class="control long">
+                                <input class="input readonly" type="text" :value="damage" readonly>
                             </p>
                         </div>
                     </div>
@@ -196,12 +187,25 @@
 
                 <div class="field is-horizontal is-right">
                     <div class="field-label is-normal">
-                        <label class="label">Absorb</label>
+                        <label class="label has-text-left">Hit</label>
                     </div>
                     <div class="field-body">
-                        <div class="field has-addons">
-                            <p class="control">
-                                <input class="input is-warning" type="text" :value="absorb" readonly>
+                        <div class="field has-addons has-addons-right">
+                            <p class="control long">
+                                <input class="input readonly" type="text" :value="attackRating" readonly>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="field is-horizontal is-right">
+                    <div class="field-label is-normal">
+                        <label class="label has-text-left">Dodge</label>
+                    </div>
+                    <div class="field-body">
+                        <div class="field has-addons has-addons-right">
+                            <p class="control long">
+                                <input class="input readonly" type="text" :value="defenseRating" readonly>
                             </p>
                         </div>
                     </div>
@@ -267,5 +271,27 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+    .long {
+        max-width: 130px;
+    }
 
+    .short {
+        max-width: 55px;
+    }
+
+    .button.is-warning {
+        background-color: orange !important;
+    }
+
+    .readonly {
+        background-color: inherit !important;
+        border: 1px solid rgb(128, 83, 38) !important;
+        color: inherit;
+    }
+
+    .editable {
+        background-color: inherit !important;
+        border: 1px solid orange !important;
+        color: inherit;
+    }
 </style>

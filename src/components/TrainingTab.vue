@@ -11,7 +11,7 @@
             <!--<a href="#">Impossible</a>-->
             <!--</p>-->
             <a v-for="e in enemies" v-bind:class="enemy && e.name === enemy.name ? 'is-active' : ''" class="panel-block"
-               @click="queueEnemy(e)">
+               @click="queueEnemy(e)" v-if="e.lvl <= workshop.lvl">
                 <table>
                     <tr>
                         <!--"e.name === next.name && e.name !== enemy.name"-->
@@ -22,7 +22,7 @@
                         <th v-else>
                             <a>{{e.name}}</a>
                         </th>
-                        <td class="has-text-right">{{mechanics.getGearscore(e)}} GS</td>
+                        <td class="has-text-right"> Lvl {{ e.lvl}}</td>
                     </tr>
                 </table>
             </a>
@@ -47,7 +47,8 @@
     computed: mapState([
       'enemy',
       'next',
-      'enemies'
+      'enemies',
+      'workshop'
     ])
   }
 </script>

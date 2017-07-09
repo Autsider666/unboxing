@@ -2,7 +2,8 @@
     <nav class="panel">
         <div v-if="bot">
             <p class="panel-heading">
-                {{bot.name}} <br/>({{mechanics.getGearscore(bot)}} GS)
+                {{bot.name}} <br/>
+                <span v-if="bot.lvl !== undefined">(Lvl {{bot.lvl}})</span>
             </p>
             <p class="panel-block" href="#">
             <table>

@@ -52,6 +52,9 @@
 </script>
 
 <style>
+    .label {
+        color: #dbdbdb !important;
+    }
 
     html, body {
         height: 100%;

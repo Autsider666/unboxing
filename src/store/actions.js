@@ -15,7 +15,7 @@ export default {
       if (state.bot && state.bot.damage !== state.bot.maxHealth && state.enableIdleHealing) {
         commit('heal', state.healingPerSecond * deltaSeconds)
       }
-      if (state.bot && state.enemy && ((state.bot.damage === 0 || !state.enableIdleHealing) && state.enableIdleCombat)) {
+      if (state.bot && state.enemy && ((state.bot.damage === 0 || !state.enableIdleHealing && state.bot.damage < state.bot.maxHealth) && state.enableIdleCombat)) {
         commit('startCombat')
       }
       if (state.next && !state.enemy || state.next && state.enemy && (state.next.name !== state.enemy.name || state.enemy.damage >= state.enemy.maxHealth || state.bot && state.bot.damage === state.bot.maxHealth && state.enemy.damage > 0)) {
