@@ -34,7 +34,7 @@
                         <a @click="equipPrototype(item)"><i class="fa fa-exchange" aria-hidden="true"></i></a>
                         {{prototype.gear[item.type].defense}}
                     </span>
-                    <a v-else @click="equipPrototype(item)"><i class="fa fa-exchange" aria-hidden="true"></i></a></button>
+                    <a v-else @click="equipPrototype(item)"><i class="fa fa-long-arrow-right" aria-hidden="true"></i></a>
                 </td>
                 <td v-if="!inCombat" >
                     <span v-if="item.type === 'Weapon' && bot && bot.gear[item.type] && bot.damage < bot.maxHealth"
