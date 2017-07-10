@@ -1,5 +1,5 @@
 <template>
-    <nav class="panel">
+    <nav class="panel" v-if="workshop">
         <p class="panel-heading">
             <router-link to="/workshop">
                 Your Workshop

@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div v-if="prototype">
         <button class="button is-light is-large is-outlined" @click="build"
                 :disabled="inCombat">
             <span v-if="bot">Replace</span>
@@ -336,10 +336,12 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
     .long {
+        min-width: 130px;
         max-width: 130px;
     }
 
     .short {
+        min-width: 55px;
         max-width: 55px;
     }
 

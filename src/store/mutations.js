@@ -233,7 +233,10 @@ export default {
       Vue.set(state.hammerspace[i], 'open', false)
     }
   },
-  loadGenerator (state) {
+  loadState (state, initState) {
+    _.forEach(initState, function (value, key) {
+      Vue.set(state, key, value)
+    })
     for (let type in state.generator.items) {
       state.generator.terminals[type] = {}
       state.generator.startwords[type] = []
@@ -252,6 +255,7 @@ export default {
         }
       }
     }
+    state.loaded = true
   }
 }
 
