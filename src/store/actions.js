@@ -19,7 +19,6 @@ export default {
         commit('startCombat')
       }
       if (state.next && !state.enemy || state.next && state.enemy && (state.next.name !== state.enemy.name || state.enemy.damage >= state.enemy.maxHealth || state.bot && state.bot.damage === state.bot.maxHealth && state.enemy.damage > 0)) {
-        console.log('loadEnemy')
         commit('loadEnemy', state.next)
       }
     }

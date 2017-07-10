@@ -181,4 +181,33 @@
         color: orange !important;
         text-shadow: coral 1px 0px 10px !important;
     }
+
+    .multiselect__tags {
+        background: #201F1D !important;
+        border: 0px solid black !important;
+    }
+
+    .multiselect__single {
+        background: #201F1D !important;
+    }
+
+    .multiselect__element {
+        background: #201F1D !important;
+    }
+
+    .multiselect__option--highlight {
+        background: #303030 !important;
+    }
+
+    .multiselect__option--selected {
+        background: #303030 !important;
+    }
+
+    .multiselect--disabled {
+        border: 1px solid rgb(128, 83, 38) !important;
+    }
+
+    .multiselect--disabled .multiselect__select {
+        background: inherit !important;
+    }
 </style>

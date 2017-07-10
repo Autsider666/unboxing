@@ -177,33 +177,27 @@
                     <div class="field has-addons has-addons-left">
                         <p class="control is-expanded">
                         <span class="select is-fullwidth">
-                          <select @change="gearChange(slot, $event.target.value)" :disabled="inCombat">
-                              <option v-if="equipped" :value="JSON.stringify(equipped)">
-                                  <span v-bind:class="equipped.rarity">{{equipped.name}} ({{equipped.rarity}}) <span
-                                          v-if="!equipped.defense">{{equipped.minDmg}} - {{equipped.maxDmg}}</span><span
-                                          v-if="equipped.defense">{{equipped.defense}} defense</span></span>
-                              </option>
-                              <option v-else selected disabled hidden value="">
-                                  No {{slot}} installed
-                              </option>
-                              <option v-for="item in warehouse" :value="JSON.stringify(item)"
-                                      v-if="item.type === slot">
-                                  <span v-bind:class="item.rarity">{{item.name}} ({{item.rarity}}) <span
-                                          v-if="!item.defense">{{item.minDmg}} - {{item.maxDmg}}</span><span
-                                          v-if="item.defense">{{item.defense}} defense</span></span>
-                              </option>
-                          </select>
+                            <multiselect :placeholder="'No ' +slot+' installed'" :value="equipped"
+                                         :options="sortedWarehouse[slot] || []"
+                                         :searchable="false" @input="gearChange"
+                                         :disabled="inCombat || sortedWarehouse[slot] === undefined"
+                                         class="editable" SelectLabel="'Select to equip'"
+                                         :custom-label="customSelectedField" :allow-empty="false" :show-labels="false">
+                            <template slot="option" scope="props">
+                                <span v-bind:class="props.option.rarity">{{props.option.name}} ({{props.option.rarity}})
+                                    <span v-if="!props.option.defense">{{props.option.minDmg}} - {{props.option.maxDmg}} dmg</span>
+                                    <span v-if="props.option.defense">{{props.option.defense}} defense</span>
+                                </span>
+                            </template>
+                        </multiselect>
                         </span>
                         </p>
-                        <!--<p class="control">-->
-                        <!--<button class="button is-primary">Equip</button>-->
-                        <!--</p>-->
                     </div>
                 </div>
             </div>
         </div>
         <div v-else>
-            Please construct a bot first
+            Please construct your prototype bot first to use it in a fight
         </div>
     </div>
 </template>
@@ -212,21 +206,36 @@
   import { mapState } from 'vuex'
   import Mechanics from '../assets/mechanics'
 
+  import _ from 'lodash'
+
+  import Multiselect from 'vue-multiselect'
+
   export default {
     name: 'CurrentBot',
+    components: {Multiselect},
     data () {
       return {}
     },
     methods: {
+      customSelectedField (item) {
+        let field = item.name + ' (' + item.rarity + ')'
+
+        if (item.type === 'Weapon') {
+          field += ' ' + item.minDmg + ' - ' + item.maxDmg + ' dmg'
+        } else {
+          field += ' ' + item.defense + ' armor'
+        }
+
+        return field
+      },
       build () {
         this.$store.commit('build')
       },
       updateBot (field, value) {
         this.$store.commit('updateBot', {field, value})
       },
-      gearChange (slot, event) {
-        console.log(slot, JSON.parse(event))
-        this.$store.commit('equipBot', JSON.parse(event))
+      gearChange (item) {
+        this.$store.commit('equipBot', item)
       }
     },
     computed: mapState({
@@ -256,7 +265,21 @@
         return Math.round(Mechanics.getArmor(this.bot) * 100) / 100
       },
       absorb () {
-        return Math.round(Mechanics.getAbsorb(this.bot) * 100) / 100 + '%'
+        return Math.round(Mechanics.getAbsorb(this.bot) * 10000) / 100 + '%'
+      },
+      sortedWarehouse () {
+        let data = _.chain(this.warehouse)
+          .sortBy(function (item) {
+            if (item.type === 'Weapon') {
+              return item.minDmg + item.maxDmg
+            } else {
+              return item.defense
+            }
+          })
+          .reverse()
+          .groupBy('type')
+          .value()
+        return data
       }
     })
   }
@@ -277,14 +300,14 @@
     }
 
     .readonly {
-        background-color: inherit !important;
+        background-color: #201F1D !important;
         border: 1px solid rgb(128, 83, 38) !important;
         color: inherit;
     }
 
     .editable {
-        background-color: inherit !important;
-        border: 1px solid orange !important;
+        background-color: #201F1D !important;
+        border: 1px solid orange;
         color: inherit;
     }
 </style>

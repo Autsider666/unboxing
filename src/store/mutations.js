@@ -10,7 +10,6 @@ import _ from 'lodash'
 
 export default {
   updatePrototype (state, {field, value}) {
-    console.log(field, value)
     Object.assign(state.prototype, {
       [field]: value
     })
@@ -28,7 +27,6 @@ export default {
     }
   },
   updatePrototypeGear (state, {field, value}) {
-    console.log(field, value)
     Object.assign(state.prototype.gear, {
       [field]: value
     })
@@ -58,7 +56,6 @@ export default {
       if (state.enemy.damage >= state.enemy.maxHealth) {
         state.inCombat = false
         state.workshop.exp += Mechanics.getExperience(state)
-        // console.log('Enemy died!')
         if (state.hammerspace.length < state.hammerspaceSize) {
           state.hammerspace.unshift(generateCrate(state))
           notificationHub.notify({
@@ -83,7 +80,6 @@ export default {
       if (state.bot.damage === state.bot.maxHealth) {
         state.inCombat = false
         state.workshop.exp += Mechanics.getExperience(state)
-        // console.log('Your bot died!')
       }
     }
   },
@@ -91,7 +87,6 @@ export default {
     Vue.set(state, 'enemy', JSON.parse(JSON.stringify(enemy)))
   },
   startCombat (state) {
-    // console.log('Starting combat!')
     state.inCombat = true
   },
   toggleIdleCombat (state) {
@@ -121,7 +116,6 @@ export default {
       state.workshop.expToNext = Math.round(state.workshop.expToNext * mp)
       state.workshop.lvl++
       state.workshop.statPoints += 4
-      console.log('Reached level', state.workshop.lvl)
     }
   },
   chooseItem (state, {crate, item}) {
@@ -181,7 +175,7 @@ export default {
   equipBot (state, item) {
     if (!state.inCombat) {
       for (let i in state.warehouse) {
-        if (state.warehouse[i] === item) {
+        if (_.isEqual(state.warehouse[i], item)) {
           state.warehouse.splice(i, 1)
           Vue.set(state.bot.gear, item.type, item)
         }
@@ -189,17 +183,13 @@ export default {
     }
   },
   equipPrototype (state, item) {
-    console.log('Equip prototype with', item)
     for (let i in state.warehouse) {
       if (_.isEqual(state.warehouse[i], item)) {
-        console.log('Item found')
         state.warehouse.splice(i, 1)
         if (state.prototype.gear[item.type]) {
-          console.log('Returning', state.prototype.gear[item.type])
           state.warehouse.unshift(state.prototype.gear[item.type])
         }
         Vue.set(state.prototype.gear, item.type, item)
-        console.log('Equipped')
       }
     }
   },

@@ -70,18 +70,14 @@ export default {
     if (state.enemy.damage >= state.enemy.maxHealth) { // win
       if (state.enemy.lvl < state.workshop.lvl) { // lower
         variable = 150
-        console.log('Won against a weaker bot')
       } else { // higher or equal
         variable = 100
-        console.log('Won against a stronger or equal bot')
       }
     } else { // lose
       if (state.enemy.lvl < state.workshop.lvl) { // lower
         variable = 300
-        console.log('Lost against a weaker bot')
       } else { // higher or equal
         variable = 200
-        console.log('Lost against a stronger or equal bot')
       }
     }
     return Math.round(state.enemy.lvl * state.enemy.damage * state.bot.int / variable / 2 * expMod * blockMod)
@@ -99,9 +95,9 @@ export default {
     let defense = this.getArmor(bot)
     let abs = 0
     if (defense <= 1600) {
-      abs = 2 * Math.sqrt(defense) / 100.0
+      abs = 2 * Math.sqrt(defense) / 100
     } else {
-      abs = 2 * Math.sqrt((1600 / defense) * (defense - 1600) + 1600) / 100.0
+      abs = 2 * Math.sqrt((1600 / defense) * (defense - 1600) + 1600) / 100
     }
     return abs
   },

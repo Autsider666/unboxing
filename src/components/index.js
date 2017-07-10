@@ -13,3 +13,4 @@ Vue.component('warehouse', require('./Warehouse.vue'))
 Vue.component('hammerspace', require('./Hammerspace.vue'))
 Vue.component('prototype', require('./Prototype.vue'))
 Vue.component('current-bot', require('./CurrentBot.vue'))
+

@@ -27,31 +27,33 @@
                 <td>
                     <span v-if="item.type === 'Weapon' && prototype.gear[item.type]"
                           v-bind:class="prototype.gear[item.type].rarity">
-                        <a @click="equipPrototype(item)"><i class="fa fa-exchange" aria-hidden="true"></i></a>
+                        <a @click="equipPrototype(item)"><i class="fa fa-exchange" aria-hidden="true" title="Swap item"></i></a>
                         {{prototype.gear[item.type].minDmg}} - {{prototype.gear[item.type].maxDmg}}
                     </span>
                     <span v-bind:class="prototype.gear[item.type].rarity" v-else-if="prototype.gear[item.type]">
-                        <a @click="equipPrototype(item)"><i class="fa fa-exchange" aria-hidden="true"></i></a>
+                        <a @click="equipPrototype(item)"><i class="fa fa-exchange" aria-hidden="true" title="Swap item"></i></a>
                         {{prototype.gear[item.type].defense}}
                     </span>
-                    <a v-else @click="equipPrototype(item)"><i class="fa fa-long-arrow-right" aria-hidden="true"></i></a>
+                    <a v-else @click="equipPrototype(item)" title="Install item">
+                        <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+                    </a>
                 </td>
                 <td v-if="!inCombat" >
                     <span v-if="item.type === 'Weapon' && bot && bot.gear[item.type] && bot.damage < bot.maxHealth"
                           v-bind:class="bot.gear[item.type].rarity">
-                        <a @click="equipBot(item)">
+                        <a @click="equipBot(item)" title="Replace item">
                             <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
                         </a>
                         {{bot.gear[item.type].minDmg}} - {{bot.gear[item.type].maxDmg}}
                     </span>
                     <span v-bind:class="bot.gear[item.type].rarity"
                           v-else-if="bot && bot.gear[item.type] && bot.damage < bot.maxHealth">
-                        <a @click="equipBot(item)">
+                        <a @click="equipBot(item)" title="Replace item">
                             <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
                         </a>
                         {{bot.gear[item.type].defense}}
                     </span>
-                    <a v-else @click="equipBot(item)">
+                    <a v-else @click="equipBot(item)" title="Replace item">
                         <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
                     </a>
                 </td>

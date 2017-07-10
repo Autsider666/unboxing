@@ -11,7 +11,7 @@
             <!--<a href="#">Impossible</a>-->
             <!--</p>-->
             <a v-for="e in enemies" v-bind:class="enemy && e.name === enemy.name ? 'is-active' : ''" class="panel-block"
-               @click="queueEnemy(e)" v-if="e.lvl <= workshop.lvl">
+               @click="queueEnemy(e)" v-if="e.minLvl <= workshop.lvl">
                 <table>
                     <tr>
                         <!--"e.name === next.name && e.name !== enemy.name"-->

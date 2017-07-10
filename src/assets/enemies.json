@@ -1,5 +1,53 @@
 [
   {
+    "name": "TX-Guard",
+    "lvl": 75,
+    "minLvl": 20,
+    "str": 95,
+    "con": 60,
+    "dex": 65,
+    "int": 50,
+    "defense": 150,
+    "minDmg": 24,
+    "maxDmg": 48
+  },
+  {
+    "name": "Terminatrix",
+    "lvl": 60,
+    "minLvl": 15,
+    "str": 70,
+    "con": 50,
+    "dex": 50,
+    "int": 80,
+    "defense": 112,
+    "minDmg": 16,
+    "maxDmg": 32
+  },
+  {
+    "name": "Terminator 2002",
+    "lvl": 45,
+    "minLvl": 10,
+    "str": 60,
+    "con": 40,
+    "dex": 47,
+    "int": 30,
+    "defense": 75,
+    "minDmg": 8,
+    "maxDmg": 24
+  },
+  {
+    "name": "Terminator 2000",
+    "lvl": 30,
+    "minLvl": 5,
+    "str": 30,
+    "con": 30,
+    "dex": 25,
+    "int": 35,
+    "defense": 32,
+    "minDmg": 4,
+    "maxDmg": 8
+  },
+  {
     "name": "T202",
     "lvl": 20,
     "minLvl": 3,

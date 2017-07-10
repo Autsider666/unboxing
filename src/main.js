@@ -9,6 +9,7 @@ import router from './router'
 import './components'
 
 import '../node_modules/bulma/css/bulma.css'
+import 'vue-multiselect/dist/vue-multiselect.min.css'
 
 Vue.use(Notifications)
 window.notificationHub = {notify: (new Vue()).$notify}
