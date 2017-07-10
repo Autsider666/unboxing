@@ -45,7 +45,8 @@ export default new Router({
       component: Workshop,
       props: {
         tab: 'current'
-      }
+      },
+      alias: '/workshop'
     },
     {
       name: 'Prototype',
@@ -53,8 +54,7 @@ export default new Router({
       component: Workshop,
       props: {
         tab: 'prototype'
-      },
-      alias: '/workshop'
+      }
     }
   ]
 })

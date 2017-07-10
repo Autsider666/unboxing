@@ -8,14 +8,14 @@
         <br>
         <div class="tabs is-centered is-boxed">
             <ul>
-                <li v-bind:class="tab == 'prototype' ? 'is-active' : ''">
-                    <router-link to="/workshop/prototype">
-                        <span>Prototype</span>
-                    </router-link>
-                </li>
                 <li v-bind:class="tab == 'current' ? 'is-active' : ''">
                     <router-link to="/workshop/current">
                         <span>Current bot</span>
+                    </router-link>
+                </li>
+                <li v-bind:class="tab == 'prototype' ? 'is-active' : ''">
+                    <router-link to="/workshop/prototype">
+                        <span>Prototype</span>
                     </router-link>
                 </li>
                 <li v-bind:class="tab == 'hammerspace' ? 'is-active' : ''">
