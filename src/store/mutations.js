@@ -6,6 +6,7 @@
 
 import Vue from 'vue'
 import Mechanics from '../assets/mechanics'
+import _ from 'lodash'
 
 export default {
   updatePrototype (state, {field, value}) {
@@ -34,6 +35,13 @@ export default {
   },
   build (state) {
     Vue.set(state, 'bot', JSON.parse(JSON.stringify(state.prototype)))
+    state.prototype.gear = {
+      Weapon: null,
+      Chest: null,
+      Head: null,
+      Legs: null,
+      Feet: null
+    }
   },
   heal (state, amount) {
     if (state.bot.damage < state.bot.maxHealth && !state.inCombat) {
@@ -170,36 +178,30 @@ export default {
       }
     }
   },
-  equip (state, item) {
-    let found = false
-    for (let i in state.hammerspace) {
-      if (state.hammerspace[i] === item) {
-        // if (state.gear[item.type]) {
-        //   // state.hammerspace.push(state.gear[item.type])
-        //   // state.hammerspace.splice(i, 1)
-        // }
-        state.hammerspace.splice(i, 1)
-        Vue.set(state.gear, item.type, item)
-      }
-    }
-    if (!found) {
+  equipBot (state, item) {
+    if (!state.inCombat) {
       for (let i in state.warehouse) {
         if (state.warehouse[i] === item) {
-          // if (state.gear[item.type]) {
-          //   // state.hammerspace.push(state.gear[item.type])
-          //   // state.warehouse.splice(i, 1)
-          // }
           state.warehouse.splice(i, 1)
-          Vue.set(state.gear, item.type, item)
+          Vue.set(state.bot.gear, item.type, item)
         }
       }
     }
-
-    let gs = 0
-    for (let i in state.gear) {
-      gs += state.gear[i].gearscore
+  },
+  equipPrototype (state, item) {
+    console.log('Equip prototype with', item)
+    for (let i in state.warehouse) {
+      if (_.isEqual(state.warehouse[i], item)) {
+        console.log('Item found')
+        state.warehouse.splice(i, 1)
+        if (state.prototype.gear[item.type]) {
+          console.log('Returning', state.prototype.gear[item.type])
+          state.warehouse.unshift(state.prototype.gear[item.type])
+        }
+        Vue.set(state.prototype.gear, item.type, item)
+        console.log('Equipped')
+      }
     }
-    state.gearscore = gs
   },
   remove (state, item) {
     for (let i in state.hammerspace) {
@@ -322,7 +324,7 @@ function generateItem (state, crateTemplate) {
   }
   if (type === 'Weapon') {
     item.minDmg = Math.round((1 + (gs * Math.random())) * mp * 100) / 100
-    item.maxDmg = Math.round((3 + (gs * Math.random())) * mp * 100) / 100
+    item.maxDmg = Math.round((item.minDmg + 1 + (gs * Math.random())) * mp * 100) / 100
   } else {
     item.defense = Math.round(gs * Math.random() * mp * 100) / 100
   }

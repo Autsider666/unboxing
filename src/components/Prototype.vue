@@ -212,6 +212,40 @@
                 </div>
             </div>
         </div>
+
+        <div class="field is-horizontal" v-for="(equipped, slot) in prototype.gear">
+            <div class="field-label is-normal">
+                <label class="label has-text-left">{{slot}}</label>
+            </div>
+            <div class="field-body">
+                <div class="field has-addons has-addons-left">
+                    <p class="control is-expanded">
+                        <span class="select is-fullwidth">
+                          <select @change="gearChange(slot, $event.target.value)">
+                              <option v-if="equipped" :value="JSON.stringify(equipped)">
+                                  <span v-bind:class="equipped.rarity">{{equipped.name}} ({{equipped.rarity}}) <span
+                                          v-if="!equipped.defense">{{equipped.minDmg}} - {{equipped.maxDmg}}</span><span
+                                          v-if="equipped.defense">{{equipped.defense}} defense</span></span>
+                              </option>
+                              <option v-else selected disabled hidden value="">
+                                  No {{slot}} installed
+                              </option>
+                              <option v-for="item in warehouse" :value="JSON.stringify(item)"
+                                      v-if="item.type === slot">
+                                  <span v-bind:class="item.rarity">{{item.name}} ({{item.rarity}}) <span
+                                          v-if="!item.defense">{{item.minDmg}} - {{item.maxDmg}}</span><span
+                                          v-if="item.defense">{{item.defense}} defense</span></span>
+                              </option>
+                          </select>
+                        </span>
+                    </p>
+                    <!--<p class="control">-->
+                        <!--<button class="button is-primary">Equip</button>-->
+                    <!--</p>-->
+                </div>
+            </div>
+        </div>
+
     </div>
 </template>
 
@@ -240,6 +274,10 @@
           this.$store.commit('minusStat', stat)
 //          this.updatePrototype(stat, this.$store.state.prototype[stat] - 1)
         }
+      },
+      gearChange (slot, event) {
+        console.log(slot, JSON.parse(event))
+        this.$store.commit('equipPrototype', JSON.parse(event))
       }
     },
     computed: mapState({
@@ -247,11 +285,17 @@
       bot: 'bot',
       workshop: 'workshop',
       prototype: 'prototype',
+      warehouse: 'warehouse',
+      gear: {},
       health () {
         return Mechanics.getMaxHealth(this.prototype)
       },
       damage () {
-        return Mechanics.getDamage(this.prototype, 1) + '-' + Mechanics.getDamage(this.prototype, 3)
+        if (this.prototype.gear.Weapon) {
+          return Math.round(Mechanics.getDamage(this.prototype, this.prototype.gear.Weapon.minDmg) * 100) / 100 + '-' + Math.round(Mechanics.getDamage(this.prototype, this.prototype.gear.Weapon.maxDmg) * 100) / 100
+        } else {
+          return Mechanics.getDamage(this.prototype, 1) + '-' + Mechanics.getDamage(this.prototype, 3)
+        }
       },
       attackRating () {
         return Mechanics.getAttackRating(this.prototype)
@@ -260,10 +304,10 @@
         return Mechanics.getDefenseRating(this.prototype)
       },
       defense () {
-        return Mechanics.getDefense(this.prototype)
+        return Math.round(Mechanics.getArmor(this.prototype) * 100) / 100
       },
       absorb () {
-        return Mechanics.getAbsorb(this.prototype) + '%'
+        return Math.round(Mechanics.getAbsorb(this.prototype) * 100) / 100 + '%'
       }
     })
   }

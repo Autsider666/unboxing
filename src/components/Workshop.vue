@@ -10,7 +10,7 @@
             <ul>
                 <li v-bind:class="tab == 'prototype' ? 'is-active' : ''">
                     <router-link to="/workshop/prototype">
-                        <span>Prototype bot</span>
+                        <span>Prototype</span>
                     </router-link>
                 </li>
                 <li v-bind:class="tab == 'current' ? 'is-active' : ''">
@@ -33,9 +33,7 @@
         <warehouse v-if="tab === 'warehouse'"></warehouse>
         <hammerspace v-if="tab === 'hammerspace'"></hammerspace>
         <prototype v-if="tab === 'prototype'"></prototype>
-        <div v-if="tab === 'current'">
-            TODO
-        </div>
+        <current-bot v-if="tab === 'current'"></current-bot>
     </div>
 </template>
 

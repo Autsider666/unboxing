@@ -5,23 +5,23 @@ export default {
     if (this.hits(attackBot, defendBot)) {
       if (!this.blocks(defendBot)) {
         if (attackBot.isPlayer) {
-          if (attackBot.attackLeft || !attackBot.gear.right || attackBot.gear.right.defense) {
-            if (attackBot.gear.left) {
-              minDmg = attackBot.gear.left.minDmg
-              maxDmg = attackBot.gear.left.maxDmg
-            } else {
-              minDmg = 1
-              maxDmg = 3
-            }
+          // if (attackBot.attackLeft || !attackBot.gear.right || attackBot.gear.right.defense) {
+          if (attackBot.gear.Weapon) {
+            minDmg = attackBot.gear.Weapon.minDmg
+            maxDmg = attackBot.gear.Weapon.maxDmg
           } else {
-            if (attackBot.gear.right) {
-              minDmg = attackBot.gear.right.minDmg
-              maxDmg = attackBot.gear.right.maxDmg
-            } else {
-              minDmg = 1
-              maxDmg = 3
-            }
+            minDmg = 1
+            maxDmg = 3
           }
+          // } else {
+          //   if (attackBot.gear.right) {
+          //     minDmg = attackBot.gear.Weapon.minDmg
+          //     maxDmg = attackBot.gear.Weapon.maxDmg
+          //   } else {
+          //     minDmg = 1
+          //     maxDmg = 3
+          //   }
+          // }
           minDmg = this.getDamage(attackBot, minDmg)
           maxDmg = this.getDamage(attackBot, maxDmg)
         } else {
@@ -96,7 +96,7 @@ export default {
     return bot.con * 10 + 50
   },
   getAbsorb (bot) {
-    let defense = this.getDefense(bot)
+    let defense = this.getArmor(bot)
     let abs = 0
     if (defense <= 1600) {
       abs = 2 * Math.sqrt(defense) / 100.0
@@ -105,7 +105,7 @@ export default {
     }
     return abs
   },
-  getDefense (bot) {
+  getArmor (bot) {
     let defense = 0
     if (bot.isPlayer) {
       if (bot.gear.Head) {
@@ -142,16 +142,6 @@ export default {
   getDamage (bot, amount) {
     return amount * (bot.str + 100) / 100
   },
-  // getAvgDamage (bot) {
-  //   let dmg = bot.gear.left.minDmg + bot.gear.left.maxDmg
-  //
-  //   if (bot.gear.right && !bot.gear.right.defense) {
-  //     dmg = (dmg + bot.gear.right.minDmg + bot.gear.right.maxDmg) / 4
-  //   } else {
-  //     dmg /= 2
-  //   }
-  //   return dmg
-  // },
   getGearscore (bot) {
     return Math.round((bot.str + bot.con + bot.dex + bot.int) / 4)
   }

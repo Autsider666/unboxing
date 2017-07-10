@@ -1,11 +1,11 @@
 <template>
     <div>
         <div class="modal is-active" v-for="crate in hammerspace" v-if="crate.type === 'Crate' && crate.open">
-            <div class="modal-background"></div>
+            <div class="modal-background" @click="close(crate)"></div>
             <div class="modal-content">
                 <nav class="panel">
                     <!--<p class="panel-heading">-->
-                        <!--Pick an Item-->
+                    <!--Pick an Item-->
                     <!--</p>-->
                     <!--<div class="panel-block">-->
                     <!--<p class="control has-icons-left">-->
@@ -35,13 +35,23 @@
                                         <strong v-else>Defense: </strong>
                                         <span v-if="item.type === 'Weapon'" v-bind:class="item.rarity">
                                             {{item.minDmg}} - {{item.maxDmg}}
-                                            <span v-if="bot.gear[item.type]" v-bind:class="bot.gear[item.type].rarity">({{bot.gear[item.type].minDmg}} - {{bot.gear[item.type].maxDmg}})</span>
+                                            <span v-if="bot && bot.gear[item.type] && bot.damage < bot.maxHealth"
+                                                  v-bind:class="bot.gear[item.type].rarity">(Current: {{bot.gear[item.type].minDmg}} - {{bot.gear[item.type].maxDmg}})</span>
+                                            <span v-if="prototype.gear[item.type]"
+                                                  v-bind:class="prototype.gear[item.type].rarity">(Prototype: {{prototype.gear[item.type].minDmg}} - {{prototype.gear[item.type].maxDmg}})</span>
                                         </span>
                                         <span v-bind:class="item.rarity" v-else>
+                                            <!--1{{item}}2-->
+                                            <!--<span v-if="bot && bot.gear[item.type] && bot.damage < bot.maxHealth"-->
+                                                  <!--v-bind:class="bot.gear[item.type].rarity">(Current: {{bot.gear[item.type].defense}})</span>-->
+                                            <!--<span v-if="prototype.gear[item.type]"-->
+                                                  <!--v-bind:class="prototype.gear[item.type].rarity">(Prototype: 5{{prototype.gear[item.type]}}6)</span>-->
                                             {{item.defense}}
-                                            <span v-if="bot.gear[item.type]" v-bind:class="bot.gear[item.type].rarity">({{bot.gear[item.type].defense}})</span>
+                                            <span v-if="bot && bot.gear[item.type] && bot.damage < bot.maxHealth"
+                                                  v-bind:class="bot.gear[item.type].rarity">(Current: {{bot.gear[item.type].defense}})</span>
+                                            <span v-if="prototype.gear[item.type]"
+                                                  v-bind:class="prototype.gear[item.type].rarity">(Prototype: {{prototype.gear[item.type].defense}})</span>
                                         </span>
-
                                     </td>
                                 </tr>
                             </table>
@@ -78,12 +88,15 @@
       hammerspace: 'hammerspace',
       warehouse: 'warehouse',
       gear: 'gear',
-      bot: 'bot'
+      bot: 'bot',
+      prototype: 'prototype'
     })
   }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
+    strong {
+        color: dimgrey;
+    }
 </style>

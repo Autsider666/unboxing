@@ -12,7 +12,7 @@ export default {
       if (state.workshop.exp >= state.workshop.expToNext) {
         commit('levelUp')
       }
-      if (state.bot && state.bot.damage !== state.bot.maxHealth && state.enableIdleHealing) {
+      if (state.bot && state.bot.damage !== state.bot.maxHealth && state.bot.damage > 0 && state.enableIdleHealing) {
         commit('heal', state.healingPerSecond * deltaSeconds)
       }
       if (state.bot && state.enemy && ((state.bot.damage === 0 || !state.enableIdleHealing && state.bot.damage < state.bot.maxHealth) && state.enableIdleCombat)) {

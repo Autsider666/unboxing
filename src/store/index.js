@@ -79,8 +79,7 @@ const state = {
     int: 10,
     attackLeft: true,
     gear: {
-      left: null,
-      right: null,
+      Weapon: null,
       Chest: null,
       Head: null,
       Legs: null,
@@ -97,7 +96,7 @@ const state = {
   warehouse: [],
   warehouseSize: 50,
   workshop: {
-    statPoints: 10,
+    statPoints: 0,
     lvl: 1,
     exp: 0,
     expToNext: 70
