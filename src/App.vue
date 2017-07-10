@@ -7,6 +7,13 @@
             <div class="columns">
                 <aside class="column is-2-widescreen is-3-desktop is-4-tablet">
                     <nav class="menu">
+                        <nav class="panel">
+                            <p class="panel-heading">
+                                <router-link to="/">
+                                    Tutorial
+                                </router-link>
+                            </p>
+                        </nav>
                         <stats-tab></stats-tab>
                         <training-tab></training-tab>
                     </nav>
