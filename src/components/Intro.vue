@@ -17,7 +17,9 @@
                     <li>- You can only store a limited amount of loot in your <span class="highlight">Hammerspace</span>.</li>
                     <li>- An item will be randomly picked from the crates that you gain after it's full.</li>
                     <li>- You can try out gear and stat point combinations all you want on your <span class="highlight">Prototype</span> until you use construct it.</li>
-                    <li>- Your <span class="highlight">Active bot</span> has fixed stats and you'll lose the installed items when switching it out with something new (when not in combat)  .</li>
+                    <li>- Your <span class="highlight">Active bot</span> has fixed stats and you'll lose the installed items when switching it out with something new (when not in combat).</li>
+                    <li>- You lose all the installed gear of your <span class="highlight">Active bot</span> when it's hp reaches 0.</li>
+                    <li>- A battle once started can't be stopped until 1 bot is disabled.</li>
                     <li>
                         - you get stat points every time you level up to spend in <span class="highlight">your workshop</span> on your prototype. <br>
                         <br>
