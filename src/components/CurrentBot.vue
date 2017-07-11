@@ -193,6 +193,9 @@
                         </span>
                         </p>
                     </div>
+                    <!--<p class="control">-->
+                        <!--<button type="submit" class="button is-primary" @click="install">Install</button>-->
+                    <!--</p>-->
                 </div>
             </div>
         </div>

@@ -30,8 +30,8 @@
                 </li>
             </ul>
         </div>
-        <warehouse v-if="tab === 'warehouse'"></warehouse>
-        <hammerspace v-if="tab === 'hammerspace'"></hammerspace>
+        <hammerspace v-if="tab === 'hammerspace'" :data="$store.state.hammerspace"></hammerspace>
+        <warehouse v-if="tab === 'warehouse'" :data="$store.state.warehouse"></warehouse>
         <prototype v-if="tab === 'prototype'"></prototype>
         <current-bot v-if="tab === 'current'"></current-bot>
     </div>
@@ -42,8 +42,7 @@
   export default {
     components: {Prototype},
     props: {
-      tab: {
-      }
+      tab: {}
     },
     data () {
       return {}

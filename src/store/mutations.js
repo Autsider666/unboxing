@@ -134,43 +134,6 @@ export default {
         Vue.set(state.hammerspace[i], 'open', false)
       }
     }
-
-    // for (let i in state.warehouse) {
-    //   if (state.warehouse[i] === crate) {
-    //     for (let j in crate.items) {
-    //       if (crate.items[j] === item) {
-    //         state.warehouse.splice(i, 1)
-    //         state.warehouse.unshift(item)
-    //         break
-    //       }
-    //     }
-    //   }
-    //   Vue.set(state.warehouse[i], 'open', false)
-    // }
-  },
-  send (state, {item, target}) {
-    if (state[target].length >= state[target + 'Size']) {
-      return
-    }
-    let found = false
-    for (let i in state.hammerspace) {
-      if (state.hammerspace[i] === item) {
-        state.hammerspace.splice(i, 1)
-        state[target].unshift(item)
-        found = true
-        break
-      }
-    }
-    if (!found) {
-      for (let i in state.warehouse) {
-        if (state.warehouse[i] === item) {
-          state.warehouse.splice(i, 1)
-          state[target].unshift(item)
-          found = true
-          break
-        }
-      }
-    }
   },
   equipBot (state, item) {
     if (!state.inCombat) {
@@ -195,43 +158,44 @@ export default {
   },
   remove (state, item) {
     for (let i in state.hammerspace) {
-      if (state.hammerspace[i] === item) {
+      if (_.isEqual(state.hammerspace[i], item)) {
         state.hammerspace.splice(i, 1)
         break
       }
     }
     for (let i in state.warehouse) {
-      if (state.warehouse[i] === item) {
+      if (_.isEqual(state.warehouse[i], item)) {
         state.warehouse.splice(i, 1)
         break
       }
     }
   },
   open (state, item) {
+    console.log(0)
     for (let i in state.hammerspace) {
-      if (state.hammerspace[i] === item) {
+      if (_.isEqual(state.hammerspace[i], item)) {
         Vue.set(state.hammerspace[i], 'open', true)
         break
       } else {
         Vue.set(state.hammerspace[i], 'open', false)
       }
     }
-    for (let i in state.warehouse) {
-      if (state.warehouse[i] === item) {
-        Vue.set(state.warehouse[i], 'open', true)
-        break
-      } else {
-        Vue.set(state.warehouse[i], 'open', false)
-      }
-    }
+    // for (let i in state.warehouse) {
+    //   if (state.warehouse[i] === item) {
+    //     Vue.set(state.warehouse[i], 'open', true)
+    //     break
+    //   } else {
+    //     Vue.set(state.warehouse[i], 'open', false)
+    //   }
+    // }
   },
   close (state) {
     for (let i in state.hammerspace) {
       Vue.set(state.hammerspace[i], 'open', false)
     }
-    for (let i in state.warehouse) {
-      Vue.set(state.hammerspace[i], 'open', false)
-    }
+    // for (let i in state.warehouse) {
+    //   Vue.set(state.hammerspace[i], 'open', false)
+    // }
   },
   loadState (state, initState) {
     _.forEach(initState, function (value, key) {

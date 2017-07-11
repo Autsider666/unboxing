@@ -3,6 +3,7 @@
         <link rel="stylesheet" href="./static/css/font-awesome.min.css">
         <notification/>
         <game-core/>
+        <unbox-tab></unbox-tab>
         <div class="section">
             <div class="columns">
                 <aside class="column is-2-widescreen is-3-desktop is-4-tablet">
