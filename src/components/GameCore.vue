@@ -12,7 +12,7 @@
   import * as weapons from '../assets/weapons.json'
 
   let initState = {
-    version: '0.1.0',
+    version: '0.2.0',
     loaded: false,
     delta: 0,
     healingPerSecond: 5,

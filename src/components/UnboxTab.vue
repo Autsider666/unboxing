@@ -30,7 +30,7 @@
                         <a class="panel-block has-text-centered">
                             <table>
                                 <tr>
-                                    <td class="has-text-centered">
+                                    <td class="has-text-centered" colspan="2">
                                         <strong v-if="item.type === 'Weapon'">Attack: </strong>
                                         <strong v-else>Defense: </strong>
                                         <span v-if="item.type === 'Weapon'" v-bind:class="item.rarity">
@@ -43,15 +43,23 @@
                                         <span v-bind:class="item.rarity" v-else>
                                             <!--1{{item}}2-->
                                             <!--<span v-if="bot && bot.gear[item.type] && bot.damage < bot.maxHealth"-->
-                                                  <!--v-bind:class="bot.gear[item.type].rarity">(Current: {{bot.gear[item.type].defense}})</span>-->
+                                            <!--v-bind:class="bot.gear[item.type].rarity">(Current: {{bot.gear[item.type].defense}})</span>-->
                                             <!--<span v-if="prototype.gear[item.type]"-->
-                                                  <!--v-bind:class="prototype.gear[item.type].rarity">(Prototype: 5{{prototype.gear[item.type]}}6)</span>-->
+                                            <!--v-bind:class="prototype.gear[item.type].rarity">(Prototype: 5{{prototype.gear[item.type]}}6)</span>-->
                                             {{item.defense}}
                                             <span v-if="bot && bot.gear[item.type] && bot.damage < bot.maxHealth"
                                                   v-bind:class="bot.gear[item.type].rarity">(Current: {{bot.gear[item.type].defense}})</span>
                                             <span v-if="prototype.gear[item.type]"
                                                   v-bind:class="prototype.gear[item.type].rarity">(Prototype: {{prototype.gear[item.type].defense}})</span>
                                         </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="has-text-centered" v-if="item.strReq">
+                                        Required Strength: {{ item.strReq }}
+                                    </td>
+                                    <td class="has-text-centered" v-if="item.dexReq">
+                                        Required Dexterity: {{item.dexReq }}
                                     </td>
                                 </tr>
                             </table>

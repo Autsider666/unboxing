@@ -171,7 +171,6 @@ export default {
     }
   },
   open (state, item) {
-    console.log(0)
     for (let i in state.hammerspace) {
       if (_.isEqual(state.hammerspace[i], item)) {
         Vue.set(state.hammerspace[i], 'open', true)
@@ -243,7 +242,7 @@ function rarityChoice (a, external) {
   return choice(choices)
 }
 
-function generateName (generator, type = 'Weapon', minLength = 3, maxLength = 5) {
+function generateName (generator, type = 'Weapon', minLength = 3, maxLength = 10) {
   let word = choice(generator.startwords[type])
   let title = [word]
   while (generator.wordstats[type].hasOwnProperty(word)) {
@@ -259,32 +258,106 @@ function generateName (generator, type = 'Weapon', minLength = 3, maxLength = 5)
 function generateItem (state, crateTemplate) {
   let type = rarityChoice(state.generator.gearSlots, crateTemplate.contains.types).name
   let rarity = rarityChoice(state.generator.rarities, crateTemplate.contains.rarities).name
-  let gs = Mechanics.getGearscore(state.enemy)
-  let item = {
-    name: generateName(state.generator, type),
-    type: type,
-    rarity: rarity
+
+  let chances = {
+    less: {
+      min: 0.1,
+      alpha: 1,
+      max: 10
+    },
+    better: {
+      min: 0.1,
+      alpha: 1,
+      max: 50
+    },
+    reqConv: {
+      min: 1,
+      alpha: 1,
+      max: 5
+    },
+    spread: {
+      min: 1,
+      alpha: 2,
+      max: 100
+    }
   }
   let mp = 1
+  let nameLength = 4
   switch (rarity) {
     case 'Poor':
       mp = 0.7
+      nameLength = 2
       break
     case 'Good':
       mp = 1.2
+      nameLength = 5
       break
     case 'Great':
       mp = 1.4
+      nameLength = 6
       break
     case 'Amazing':
+      nameLength = 8
       mp = 1.7
       break
   }
-  if (type === 'Weapon') {
-    item.minDmg = Math.round((1 + (gs * Math.random())) * mp * 100) / 100
-    item.maxDmg = Math.round((item.minDmg + 1 + (gs * Math.random())) * mp * 100) / 100
+  let reqConv = 4 - mp
+
+  let lvl = state.enemy.lvl
+  // let iLvl = state.enemy.lvl
+  let less = Math.min(chances.less.max, Math.round(paretoDistribution(chances.less.min, chances.less.alpha)))
+  if (less) {
+    lvl -= less
   } else {
-    item.defense = Math.round(gs * Math.random() * mp * 100) / 100
+    lvl += Math.min(chances.better.max, Math.round(paretoDistribution(chances.better.min, chances.better.alpha)))
+  }
+  if (lvl < 1) {
+    lvl = 1
+  }
+  let item = {
+    name: generateName(state.generator, type, nameLength),
+    type: type,
+    rarity: rarity
+  }
+  if (type === 'Weapon') {
+    let chance = Math.floor(Math.random() * 4)
+    switch (chance) {
+      case 0 : // str
+        item.strReq = 10 + lvl
+        break
+      case 1 : // dex
+        item.dexReq = 10 + lvl
+        break
+      default : // double
+        let str = Math.floor((Math.random() * lvl) + 1)
+        item.strReq = 10 + str
+        item.dexReq = 10 + lvl - str
+        break
+    }
+
+    if (lvl < 2.5) {
+      lvl = 2.5
+    }
+    let avgDmg = lvl / reqConv
+    let spread = Math.min(nameLength * 2, paretoDistribution(nameLength, chances.spread.alpha))
+    if (avgDmg < 2.5) {
+      avgDmg += 2.5
+    }
+    spread = avgDmg / spread
+    item.minDmg = Math.round((avgDmg - spread) * 100) / 100
+    item.maxDmg = Math.round((avgDmg + spread) * 100) / 100
+  } else {
+    let mult = 0.5
+    switch (type) {
+      case 'Chest':
+        mult = 2
+        break
+      case 'Head':
+        mult = 1
+        break
+    }
+    item.defense = Math.round((lvl * mp * mult) * 100) / 100
+    item.strReq = Math.round(10 + lvl)
   }
 
   return item
@@ -305,4 +378,9 @@ function generateCrate (state) {
     equipped: false,
     gearscore: Mechanics.getGearscore(state.enemy)
   }
+}
+
+function paretoDistribution (minimum, alpha) {
+  var u = 1.0 - Math.random()
+  return minimum / Math.pow(u, 1.0 / alpha)
 }

@@ -168,7 +168,16 @@
             <p>
                 Warning: You lose the currently equipped item when replacing it on an active bot!<br><br>
             </p>
-
+            <!--<div class="field is-grouped">-->
+                <!--<p class="control is-expanded">-->
+                    <!--<input v-model="filterKey" class="input" type="text" placeholder="Filter/search here">-->
+                <!--</p>-->
+                <!--<p class="control">-->
+                    <!--<a class="button is-danger" @click="removeFiltered">-->
+                        <!--Remove all remaining items-->
+                    <!--</a>-->
+                <!--</p>-->
+            <!--</div>-->
             <div class="field is-horizontal" v-for="(equipped, slot) in bot.gear">
                 <div class="field-label is-normal">
                     <label class="label has-text-left">{{slot}}</label>
@@ -194,7 +203,7 @@
                         </p>
                     </div>
                     <!--<p class="control">-->
-                        <!--<button type="submit" class="button is-primary" @click="install">Install</button>-->
+                        <!--<button type="submit" class="button is-warning" @click="install">Install</button>-->
                     <!--</p>-->
                 </div>
             </div>
@@ -271,6 +280,7 @@
         return Math.round(Mechanics.getAbsorb(this.bot) * 10000) / 100 + '%'
       },
       sortedWarehouse () {
+        let vm = this
         let data = _.chain(this.warehouse)
           .sortBy(function (item) {
             if (item.type === 'Weapon') {
@@ -278,6 +288,9 @@
             } else {
               return item.defense
             }
+          })
+          .filter(function (item) {
+            return (!item.strReq || vm.bot.str >= item.strReq) && (!item.dexReq || vm.bot.dex >= item.dexReq)
           })
           .reverse()
           .groupBy('type')

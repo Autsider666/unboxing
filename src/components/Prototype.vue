@@ -67,7 +67,7 @@
                     <div class="field-body">
                         <div class="field has-addons has-addons-right">
                             <p class="control" @click="minusStat('str')">
-                                <a class="button is-warning" :disabled="prototype.str <= 10">
+                                <a class="button is-warning" :disabled="prototype.str <= strLimit">
                                     <i class="fa fa-minus" aria-hidden="true"></i>
                                 </a>
                             </p>
@@ -90,7 +90,7 @@
                     <div class="field-body">
                         <div class="field has-addons has-addons-right">
                             <p class="control" @click="minusStat('dex')">
-                                <a class="button is-warning" :disabled="prototype.dex <= 10">
+                                <a class="button is-warning" :disabled="prototype.dex <= dexLimit">
                                     <i class="fa fa-minus" aria-hidden="true"></i>
                                 </a>
                             </p>
@@ -230,6 +230,8 @@
                                 <span v-bind:class="props.option.rarity">{{props.option.name}} ({{props.option.rarity}})
                                     <span v-if="!props.option.defense">{{props.option.minDmg}} - {{props.option.maxDmg}} dmg</span>
                                     <span v-if="props.option.defense">{{props.option.defense}} defense</span>
+                                    <span v-if="props.option.dexReq">(min {{props.option.dexReq}} Dex)</span>
+                                    <span v-if="props.option.strReq">(min {{props.option.strReq}} Str)</span>
                                 </span>
                             </template>
                         </multiselect>
@@ -277,7 +279,14 @@
 //        this.updatePrototype(stat, this.$store.state.prototype[stat] + 1)
       },
       minusStat (stat) {
-        if (this.$store.state.prototype[stat] > 10) {
+        let limit = 10
+        if (stat === 'str') {
+          limit = this.strLimit
+        }
+        if (stat === 'dex') {
+          limit = this.dexLimit
+        }
+        if (this.$store.state.prototype[stat] > limit) {
           this.$store.commit('minusStat', stat)
 //          this.updatePrototype(stat, this.$store.state.prototype[stat] - 1)
         }
@@ -292,7 +301,37 @@
       workshop: 'workshop',
       prototype: 'prototype',
       warehouse: 'warehouse',
-      gear: {},
+      dexLimit () {
+        if (this.prototype.gear.Weapon && this.prototype.gear.Weapon.dexReq) {
+          return this.prototype.gear.Weapon.dexReq
+        } else {
+          return 10
+        }
+      },
+      strLimit () {
+        let str = 10
+
+        if (this.prototype.gear.Weapon && this.prototype.gear.Weapon.strReq) {
+          str = Math.max(str, this.prototype.gear.Weapon.strReq)
+        }
+
+        if (this.prototype.gear.Head && this.prototype.gear.Head.strReq) {
+          str = Math.max(str, this.prototype.gear.Head.strReq)
+        }
+
+        if (this.prototype.gear.Chest && this.prototype.gear.Chest.strReq) {
+          str = Math.max(str, this.prototype.gear.Chest.strReq)
+        }
+
+        if (this.prototype.gear.Legs && this.prototype.gear.Legs.strReq) {
+          str = Math.max(str, this.prototype.gear.Legs.strReq)
+        }
+
+        if (this.prototype.gear.Feet && this.prototype.gear.Feet.strReq) {
+          str = Math.max(str, this.prototype.gear.Feet.strReq)
+        }
+        return str
+      },
       health () {
         return Mechanics.getMaxHealth(this.prototype)
       },
@@ -313,9 +352,10 @@
         return Math.round(Mechanics.getArmor(this.prototype) * 100) / 100
       },
       absorb () {
-        return Math.round(Mechanics.getAbsorb(this.prototype) * 100) / 100 + '%'
+        return Math.round(Mechanics.getAbsorb(this.prototype) * 10000) / 100 + '%'
       },
       sortedWarehouse () {
+        let vm = this
         let data = _.chain(this.warehouse)
           .sortBy(function (item) {
             if (item.type === 'Weapon') {
@@ -323,6 +363,9 @@
             } else {
               return item.defense
             }
+          })
+          .filter(function (item) {
+            return (!item.strReq || vm.prototype.str >= item.strReq) && (!item.dexReq || vm.prototype.dex >= item.dexReq)
           })
           .reverse()
           .groupBy('type')
